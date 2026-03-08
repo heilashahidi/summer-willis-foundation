@@ -13,6 +13,10 @@ export default function ResourceCard({ resource, onClose }: Props) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!resource.place_id) {
+      setLoading(false)
+      return
+    }
     setLoading(true)
     setDetails(null)
     fetch(`https://places.googleapis.com/v1/places/${resource.place_id}`, {
@@ -37,6 +41,7 @@ export default function ResourceCard({ resource, onClose }: Props) {
           wheelchair_accessible: data.accessibilityOptions?.wheelchairAccessibleEntrance ?? null,
         })
       })
+      .catch(() => {})
       .finally(() => setLoading(false))
   }, [resource.place_id])
 
@@ -90,9 +95,10 @@ export default function ResourceCard({ resource, onClose }: Props) {
             <p className="text-sm text-gray-400">Loading details...</p>
           )}
 
-          {!loading && details && (
+          {!loading && (
             <>
-              {details.open_now !== null && (
+              {/* Places API fields */}
+              {details?.open_now !== null && details?.open_now !== undefined && (
                 <div>
                   <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${
                     details.open_now
@@ -104,7 +110,7 @@ export default function ResourceCard({ resource, onClose }: Props) {
                 </div>
               )}
 
-              {details.rating && (
+              {details?.rating && (
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Rating</p>
                   <div className="flex items-center gap-1">
@@ -119,13 +125,14 @@ export default function ResourceCard({ resource, onClose }: Props) {
                 </div>
               )}
 
-              {details.formatted_address && (
+              {details?.formatted_address && (
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Address</p>
                   <p className="text-sm text-gray-700">{details.formatted_address}</p>
                 </div>
               )}
 
+              {/* Always-show Supabase fields */}
               {resource.hotline && (
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">24/7 Hotline</p>
@@ -135,16 +142,16 @@ export default function ResourceCard({ resource, onClose }: Props) {
                 </div>
               )}
 
-              {details.phone && (
+              {details?.phone && (
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Phone</p>
-                  <a href={`tel:${details.phone}`} className="text-sm text-blue-600 hover:underline">
+                  <a href={`tel:${details.phone}`} className="text-sm text-gray-700 hover:underline">
                     {details.phone}
                   </a>
                 </div>
               )}
 
-              {details.hours && (
+              {details?.hours && (
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Hours</p>
                   <ul className="text-sm text-gray-700 space-y-0.5">
@@ -153,8 +160,8 @@ export default function ResourceCard({ resource, onClose }: Props) {
                 </div>
               )}
 
-              {details.wheelchair_accessible && (
-                <p className="text-xs text-blue-600 font-medium">♿ Wheelchair accessible entrance</p>
+              {details?.wheelchair_accessible && (
+                <p className="text-xs text-gray-600 font-medium">♿ Wheelchair accessible entrance</p>
               )}
 
               {resource.serves_minors && (
@@ -177,7 +184,7 @@ export default function ResourceCard({ resource, onClose }: Props) {
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Languages</p>
                   <div className="flex flex-wrap gap-1">
                     {resource.languages.map(l => (
-                      <span key={l} className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">{l}</span>
+                      <span key={l} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{l}</span>
                     ))}
                   </div>
                 </div>
@@ -191,27 +198,33 @@ export default function ResourceCard({ resource, onClose }: Props) {
               )}
 
               <div className="flex gap-2 mt-2">
-                {details.google_maps_uri && (
+                {details?.google_maps_uri && (
                   <a
                     href={details.google_maps_uri}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 rounded-lg py-2 transition-colors"
+                    className="flex-1 text-center text-sm font-medium text-white rounded-lg py-2 transition-colors"
+                    style={{ backgroundColor: '#006b7a' }}
                   >
                     📍 Directions
                   </a>
                 )}
-                {details.website && (
+                {details?.website && (
                   <a
                     href={details.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-center text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg py-2 transition-colors"
+                    className="flex-1 text-center text-sm font-medium text-white rounded-lg py-2 transition-colors"
+                    style={{ backgroundColor: '#00909d' }}
                   >
                     Visit Website →
                   </a>
                 )}
               </div>
+
+              {!resource.hotline && !details?.phone && !resource.notes && !resource.services?.length && (
+                <p className="text-sm text-gray-400 italic">No additional details available.</p>
+              )}
             </>
           )}
         </div>
