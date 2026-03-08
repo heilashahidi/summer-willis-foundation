@@ -79,6 +79,7 @@ const jsonLd = {
       }}
     />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body>
     <Nav />

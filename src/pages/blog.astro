@@ -3,52 +3,40 @@ import Layout from '../layouts/Layout.astro';
 
 const posts = [
   {
-    date: 'February 28, 2026',
-    category: 'Impact Story',
-    title: 'How the Food Pantry Helped One Family Through a Tough Winter',
-    excerpt: 'Maria and her three children came to us after an unexpected job loss. Here\'s how our team rallied to keep their lights on and their refrigerator full.',
-    emoji: '🥗',
+    date: 'March 1, 2026',
+    category: 'Survivor Resources',
+    title: 'What to Do After Sexual Assault: A Step-by-Step Guide for Survivors',
+    excerpt: 'If you or someone you know has experienced sexual assault, knowing your options can feel overwhelming. This guide walks through your first steps — at your own pace, on your own terms.',
+    emoji: '💜',
     categoryColor: 'var(--c-primary)',
+    href: '/blog/what-to-do-after-sexual-assault',
   },
   {
-    date: 'February 14, 2026',
-    category: 'Volunteer Spotlight',
-    title: 'Meet James: 5 Years of Saturday Mornings at the Pantry',
-    excerpt: 'James started volunteering "just for a month" in 2021. Five years and 260 Saturdays later, he wouldn\'t trade it for anything.',
-    emoji: '🤝',
-    categoryColor: 'var(--c-blue)',
-  },
-  {
-    date: 'January 30, 2026',
-    category: 'Program Update',
-    title: 'Expanding Our Housing Program: What\'s New in 2026',
-    excerpt: 'Thanks to a $150K grant, we\'re adding two new case managers and doubling our emergency rental assistance capacity this year.',
-    emoji: '🏠',
+    date: 'February 15, 2026',
+    category: 'Survivor Resources',
+    title: 'What Is a SANE Exam? Everything Survivors Need to Know',
+    excerpt: 'A Sexual Assault Nurse Examiner (SANE) exam can feel intimidating if you don\'t know what to expect. Here\'s a clear, compassionate breakdown of what it is, what happens, and what your rights are.',
+    emoji: '🏥',
     categoryColor: 'var(--c-primary)',
+    href: '/blog/what-is-a-sane-exam',
   },
   {
-    date: 'January 12, 2026',
-    category: 'Community News',
-    title: 'Summer Willis Foundation Partners with Three Local Schools for Backpack Program',
-    excerpt: 'Starting this spring, students at Lincoln, Madison, and Roosevelt Elementary will receive weekend food packs through our new school partnership.',
-    emoji: '🎒',
-    categoryColor: 'var(--c-blue)',
-  },
-  {
-    date: 'December 18, 2025',
-    category: 'Annual Report',
-    title: '2025 Year in Review: By the Numbers',
-    excerpt: 'We served 4,200+ families, distributed 18,000 meals, assisted with 340 housing cases, and welcomed 320 new volunteers. Read our full annual report.',
-    emoji: '📊',
-    categoryColor: 'var(--c-primary)',
-  },
-  {
-    date: 'November 25, 2025',
-    category: 'Event Recap',
-    title: 'Giving Tuesday Raises $42,000 — Thank You!',
-    excerpt: 'Our community showed up in a big way this Giving Tuesday. Here\'s how those funds will be put to work in the months ahead.',
-    emoji: '💛',
+    date: 'February 1, 2026',
+    category: 'Legal Resources',
+    title: 'Understanding Your Legal Rights as a Sexual Violence Survivor',
+    excerpt: 'Navigating the legal system after sexual violence can feel overwhelming. Here\'s a plain-language breakdown of your rights — from Title IX to protective orders to civil suits.',
+    emoji: '⚖️',
     categoryColor: 'var(--c-primary-dark)',
+    href: '/blog/legal-rights-sexual-violence-survivors',
+  },
+  {
+    date: 'January 20, 2026',
+    category: 'Healing & Recovery',
+    title: 'How Community Support Accelerates Healing for Survivors of Sexual Violence',
+    excerpt: 'Research and lived experience both point to the same truth: healing from sexual violence rarely happens in isolation. Here\'s how community and peer support make a measurable difference.',
+    emoji: '🤝',
+    categoryColor: 'var(--c-pink-dark)',
+    href: '/blog/how-community-support-helps-survivors-heal',
   },
 ];
 ---
@@ -75,7 +63,7 @@ const posts = [
           </div>
           <h2>{posts[0].title}</h2>
           <p>{posts[0].excerpt}</p>
-          <a href="#" class="btn btn-primary">Read Story</a>
+          <a href={posts[0].href} class="btn btn-primary">Read Story</a>
         </div>
       </div>
 
@@ -91,7 +79,7 @@ const posts = [
             </div>
             <h3>{post.title}</h3>
             <p>{post.excerpt}</p>
-            <a href="#" class="read-link">Read more →</a>
+            <a href={post.href} class="read-link">Read more →</a>
           </article>
         ))}
       </div>
