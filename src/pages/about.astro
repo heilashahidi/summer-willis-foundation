@@ -54,38 +54,34 @@ import Layout from '../layouts/Layout.astro';
         <div class="section-eyebrow">All About Our Story</div>
         <h2 class="section-title">Running was only the start.</h2>
         <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
-        <p>Summer found her true, renewed strength not just in the miles, but in community, in the power of telling her story without shame , and in a fierce new purpose: creating tangible change so that what happened to her wouldn't happen to others. She realized she had a choice: accept the narrative of 'victim,' or rewrite it. She chose to rewrite it. That single run transformed into a public mission. What started as 'Project 29' became a movement. Summer founded the Summer Willis Foundation to ensure that no survivor ever feels alone and that every survivor has the tools to find their own power—whether on the running path, in their community, or in creating systemic change."</p>
+        <p>Summer found her true, renewed strength not just in the miles, but in community, in the power of telling her story without shame , and in a fierce new purpose: creating tangible change so that what happened to her wouldn't happen to others. She realized she had a choice: accept the narrative of 'victim,' or rewrite it. She chose to rewrite it. That single run transformed into a public mission. What started as 'Project 29' became a movement. Summer founded the Summer Willis Foundation to ensure that no survivor ever feels alone and that every survivor has the tools to find their own power—whether on the running path, in their community, or in creating systemic change.</p>
       </div>
 
-      <!-- Right: Values Carousel -->
-      <div class="values-carousel" id="values-carousel">
-        <p class="carousel-label">Mission &amp; Values</p>
-        <div class="carousel-track">
-          <div class="carousel-card value-card highlight active">
+      <!-- Right: Card Stack -->
+      <div class="card-stack-wrap">
+        <p class="values-label">Mission &amp; Values</p>
+        <p class="values-hint">Click to flip through</p>
+        <div class="card-stack" id="values-stack">
+          <div class="stack-card card-teal">
+            <div class="stack-icon">🎯</div>
             <h3>Our Mission</h3>
             <p>Through our commitment to advocacy, community, and resource provision, the Summer Willis Foundation exists to reframe the narrative around sexual violence, empower survivors to reclaim their stories, and create lasting systemic change that prevents future harm.</p>
           </div>
-          <div class="carousel-card value-card value-yellow">
-            <div class="value-icon">💛</div>
+          <div class="stack-card card-yellow">
+            <div class="stack-icon">💛</div>
             <h3>Believe Survivors</h3>
             <p>We center survivor voices in everything we do — leading with compassion, trust, and unconditional support.</p>
           </div>
-          <div class="carousel-card value-card value-pink">
-            <div class="value-icon">🤝</div>
+          <div class="stack-card card-pink">
+            <div class="stack-icon">🤝</div>
             <h3>Community</h3>
             <p>Healing happens in community. We build brave, connected spaces where survivors are never alone.</p>
           </div>
-          <div class="carousel-card value-card value-blue">
-            <div class="value-icon">📣</div>
+          <div class="stack-card card-blue">
+            <div class="stack-icon">📣</div>
             <h3>Systemic Change</h3>
             <p>We don't just respond to harm — we work to dismantle the systems and cultures that allow it to persist.</p>
           </div>
-        </div>
-        <div class="carousel-dots">
-          <button class="dot active" aria-label="Our Mission"></button>
-          <button class="dot" aria-label="Believe Survivors"></button>
-          <button class="dot" aria-label="Community"></button>
-          <button class="dot" aria-label="Systemic Change"></button>
         </div>
       </div>
 
@@ -392,56 +388,67 @@ import Layout from '../layouts/Layout.astro';
     font-size: 1rem;
   }
 
-  /* Values Carousel */
-  .carousel-label {
+  /* Values Flip Cards */
+  .values-label {
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--c-primary);
+    margin: 0 0 0.25rem;
+  }
+
+  .values-hint {
+    font-size: 0.8rem;
+    color: #9ca3af;
     margin: 0 0 1rem;
   }
 
-  .carousel-track {
+  /* Card Stack */
+  .card-stack-wrap { }
+
+  .card-stack {
     position: relative;
-    min-height: 220px;
-  }
-
-  .carousel-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transform: translateX(16px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    pointer-events: none;
-  }
-
-  :global(.carousel-card.active) {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
-
-  .carousel-dots {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1.25rem;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--c-primary);
-    background: transparent;
+    height: 280px;
+    perspective: 1000px;
     cursor: pointer;
-    padding: 0;
-    transition: background 0.2s;
+    margin-bottom: 1rem;
   }
 
-  :global(.dot.active) { background: var(--c-primary); }
+  .stack-card {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    will-change: transform, box-shadow;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    will-change: transform;
+  }
+
+  .stack-card h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin: 0;
+    color: #111827;
+  }
+
+  .stack-card p {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .stack-icon { font-size: 2rem; }
+
+  .card-teal   { background: var(--c-bg-teal);   border: 2px solid rgba(0,144,157,0.25); }
+  .card-yellow { background: var(--c-bg-yellow);  border: 2px solid rgba(255,198,11,0.35); }
+  .card-pink   { background: var(--c-bg-pink);    border: 2px solid rgba(239,63,107,0.25); }
+  .card-blue   { background: var(--c-bg-blue);    border: 2px solid rgba(100,160,220,0.25); }
 
   .story-grid {
     display: grid;
@@ -471,39 +478,6 @@ import Layout from '../layouts/Layout.astro';
     display: block;
   }
 
-  .value-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    border: 1px solid #e5e7eb;
-  }
-
-  .value-card.highlight {
-    background: var(--c-primary);
-    color: white;
-    border-color: var(--c-primary);
-  }
-
-  .value-card.highlight p { color: rgba(255,255,255,0.85); }
-
-  .value-yellow { background: var(--c-bg-yellow); border-color: var(--c-yellow); }
-  .value-pink { background: var(--c-bg-pink); border-color: var(--c-pink); }
-  .value-blue { background: var(--c-bg-blue); border-color: var(--c-blue-light); }
-
-  .value-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
-
-  .value-card h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
-  }
-
-  .value-card p {
-    font-size: 0.9rem;
-    color: #6b7280;
-    line-height: 1.6;
-    margin: 0;
-  }
 
   /* Tenets */
   .tenets-grid {
@@ -853,34 +827,6 @@ import Layout from '../layouts/Layout.astro';
   const video = document.getElementById('story-video') as HTMLVideoElement;
   video?.addEventListener('ended', () => { video.currentTime = 0; });
 
-  // Values carousel
-  const carousel = document.getElementById('values-carousel');
-  if (carousel) {
-    const cards = carousel.querySelectorAll('.carousel-card');
-    const dots = carousel.querySelectorAll('.dot');
-    let current = 0;
-    let timer: ReturnType<typeof setInterval>;
-
-    function goTo(index: number) {
-      (cards[current] as HTMLElement).classList.remove('active');
-      (dots[current] as HTMLElement).classList.remove('active');
-      current = (index + cards.length) % cards.length;
-      (cards[current] as HTMLElement).classList.add('active');
-      (dots[current] as HTMLElement).classList.add('active');
-    }
-
-    function startTimer() { timer = setInterval(() => goTo(current + 1), 4000); }
-    function stopTimer() { clearInterval(timer); }
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
-    });
-
-    carousel.addEventListener('mouseenter', stopTimer);
-    carousel.addEventListener('mouseleave', startTimer);
-    startTimer();
-  }
-
   document.querySelectorAll('.advisory-read-more').forEach(btn => {
     const bio = btn.previousElementSibling;
     if (!bio || !bio.classList.contains('advisory-bio')) return;
@@ -901,4 +847,93 @@ import Layout from '../layouts/Layout.astro';
       button.textContent = expanded ? 'Show less' : 'Read more';
     });
   });
+
+  // Card stack
+  const stack = document.getElementById('values-stack');
+  if (stack) {
+    const cards = Array.from(stack.querySelectorAll<HTMLElement>('.stack-card'));
+    let order = cards.map((_, i) => i);
+    let animating = false;
+
+    // Stack positions: [top → bottom]
+    const positions = [
+      { z: 4, rotate: '0deg',  tx: '0px',   ty: '0px' },
+      { z: 3, rotate: '3deg',  tx: '8px',   ty: '8px' },
+      { z: 2, rotate: '-2deg', tx: '-6px',  ty: '14px' },
+      { z: 1, rotate: '5deg',  tx: '14px',  ty: '18px' },
+    ];
+
+    function place(card: HTMLElement, pos: number, animate: boolean, delay = 0) {
+      const p = positions[Math.min(pos, positions.length - 1)];
+      card.style.transition = animate
+        ? `transform 500ms cubic-bezier(0.34, 1.2, 0.64, 1) ${delay}ms, box-shadow 500ms ease ${delay}ms`
+        : 'none';
+      card.style.zIndex = String(p.z);
+      card.style.transform = `rotate(${p.rotate}) translate(${p.tx}, ${p.ty})`;
+      card.style.boxShadow = '';
+    }
+
+    function next() {
+      if (animating) return;
+      animating = true;
+
+      const topIdx = order[0];
+      const topCard = cards[topIdx];
+
+      // Phase 1 — lift up (150ms)
+      topCard.style.zIndex = '10';
+      topCard.style.transition = 'transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 150ms ease';
+      topCard.style.transform = 'rotate(-2deg) translateY(-16px) scale(1.04)';
+      topCard.style.boxShadow = '0 20px 40px rgba(0,0,0,0.18)';
+
+      setTimeout(() => {
+        // Phase 2 — sweep right, clear of the deck (380ms)
+        topCard.style.transition = 'transform 380ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 280ms ease';
+        topCard.style.transform = 'rotate(6deg) translateX(115%) translateY(10%) scale(0.92)';
+        topCard.style.boxShadow = '0 8px 24px rgba(0,0,0,0.10)';
+
+        // Other cards rise simultaneously
+        order.slice(1).forEach((cardIdx, i) => {
+          place(cards[cardIdx], i, true, i * 30);
+        });
+
+        setTimeout(() => {
+          // Card is fully to the side — safe to drop z-index, no overlap
+          order = [...order.slice(1), topIdx];
+          const backPos = positions[positions.length - 1];
+          topCard.style.zIndex = String(backPos.z);
+
+          // Phase 3 — slide INTO the back of the deck (300ms)
+          topCard.style.transition = 'transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 300ms ease';
+          topCard.style.transform = `rotate(${backPos.rotate}) translate(${backPos.tx}, ${backPos.ty})`;
+          topCard.style.boxShadow = '';
+
+          setTimeout(() => { animating = false; }, 320);
+        }, 390);
+      }, 150);
+    }
+
+    // Set initial positions
+    order.forEach((cardIdx, pos) => place(cards[cardIdx], pos, false));
+    stack.addEventListener('click', next);
+
+    // Cursor tilt on top card only
+    stack.addEventListener('mousemove', (e: MouseEvent) => {
+      if (animating) return;
+      const topCard = cards[order[0]];
+      const rect = stack.getBoundingClientRect();
+      const rx = (((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2)) * -8;
+      const ry = (((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2)) * 8;
+      topCard.style.transition = 'transform 0.1s ease';
+      topCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+
+    stack.addEventListener('mouseleave', () => {
+      if (animating) return;
+      const topCard = cards[order[0]];
+      topCard.style.transition = 'transform 0.4s ease';
+      const p = positions[0];
+      topCard.style.transform = `rotate(${p.rotate}) translate(${p.tx}, ${p.ty})`;
+    });
+  }
 </script>
