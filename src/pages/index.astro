@@ -639,7 +639,7 @@ import HeroSlider from '../components/HeroSlider.astro';
     transition: background 0.2s, transform 0.2s;
   }
 
-  .voices-dot.active {
+  :global(.voices-dot.active) {
     background: var(--c-primary);
     transform: scale(1.3);
   }

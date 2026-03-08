@@ -418,7 +418,7 @@ import Layout from '../layouts/Layout.astro';
     pointer-events: none;
   }
 
-  .carousel-card.active {
+  :global(.carousel-card.active) {
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
@@ -441,7 +441,7 @@ import Layout from '../layouts/Layout.astro';
     transition: background 0.2s;
   }
 
-  .dot.active { background: var(--c-primary); }
+  :global(.dot.active) { background: var(--c-primary); }
 
   .story-grid {
     display: grid;
