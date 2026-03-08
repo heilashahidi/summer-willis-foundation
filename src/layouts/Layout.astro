@@ -1,0 +1,188 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Summer Willis Foundation',
+  description = 'Building stronger communities through food support, housing assistance, and family services.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | Summer Willis Foundation</title>
+  </head>
+  <body>
+    <Nav />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: 'TAYBirdie';
+    src: url('/fonts/TAYBirdieRegular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --c-primary:      #00909d;
+    --c-primary-dark: #006b7a;
+    --c-yellow:       #ffc60b;
+    --c-yellow-light: #ffe896;
+    --c-pink:         #f37f8e;
+    --c-pink-dark:    #ef3f6b;
+    --c-blue:         #6e98b9;
+    --c-blue-light:   #bad0ec;
+    --c-bg-teal:      #eff8fa;
+    --c-bg-yellow:    #fff7eb;
+    --c-bg-pink:      #fef2f1;
+    --c-bg-blue:      #eef5fc;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-size: 18px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: #111827;
+    background: #ffffff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'TAYBirdie', system-ui, sans-serif;
+  }
+
+  img { max-width: 100%; }
+
+  .sun-bl {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 200px;
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  /* Shared utility classes */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.15rem;
+    color: #6b7280;
+    margin: 0 0 2.5rem;
+    line-height: 1.7;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--c-primary);
+    color: white;
+  }
+
+  .btn-primary:hover { background: var(--c-primary-dark); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--c-primary);
+    border: 2px solid var(--c-primary);
+  }
+
+  .btn-outline:hover { background: var(--c-bg-teal); }
+
+  .btn-white {
+    background: white;
+    color: var(--c-primary);
+  }
+
+  .btn-white:hover { background: #f9fafb; }
+
+  /* Scroll reveal animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  const targets = document.querySelectorAll(
+    '.section, .stat-card, .value-card, .tenet-card, .advisory-card, ' +
+    '.founder-card, .role-card, .campaign-highlight, .upcoming-event, ' +
+    '.campaign-grid, .donate-inner, .hero-content, .story-grid'
+  );
+
+  targets.forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+</script>

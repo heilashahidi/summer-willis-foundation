@@ -1,0 +1,206 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/campaigns', label: 'Campaigns' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <img src="/images/Logo/Summer Willis Foundation - Primary Logo.png" alt="Summer Willis Foundation" class="logo-img" />
+    </a>
+
+    <button class="menu-toggle" aria-label="Toggle menu" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav-link', { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href="/get-involved" class="nav-cta">Donate</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('menu-toggle') as HTMLButtonElement;
+  const links = document.getElementById('nav-links');
+
+  function openMenu() {
+    links?.classList.add('open');
+    toggle?.classList.add('is-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    links?.classList.remove('open');
+    toggle?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle?.addEventListener('click', () => {
+    toggle.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  // Close when a nav link is clicked
+  links?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!toggle?.contains(e.target as Node) && !links?.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 116px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 92px;
+    width: auto;
+    display: block;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    padding: 0.6rem 1.1rem;
+    text-decoration: none;
+    color: #374151;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    background: var(--c-bg-teal);
+    color: var(--c-primary);
+  }
+
+  .nav-cta {
+    margin-left: 0.75rem;
+    padding: 0.6rem 1.5rem;
+    background: var(--c-yellow);
+    color: #111827;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: background 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--c-yellow-light); }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+
+  .menu-toggle:hover { background: var(--c-bg-teal); }
+
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #374151;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+
+  /* Hamburger → X */
+  .menu-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .menu-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 640px) {
+    .menu-toggle { display: flex; }
+
+    .nav-links {
+      position: absolute;
+      top: 116px;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 0 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      gap: 0.25rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      /* Slide animation */
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.3s ease;
+    }
+
+    .nav-links.open {
+      max-height: 480px;
+      opacity: 1;
+      padding: 1rem;
+    }
+
+    .nav-links li { width: 100%; }
+    .nav-link, .nav-cta { display: block; width: 100%; }
+    .nav-cta { margin-left: 0; margin-top: 0.5rem; text-align: center; }
+  }
+</style>

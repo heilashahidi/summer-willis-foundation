@@ -1,0 +1,448 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const campaigns = [
+  {
+    id: 'denim-runs',
+    icon: '👟',
+    title: 'The Denim Runs',
+    tagline: 'Running as reclamation. Community as power.',
+    description: 'The Denim Runs are a series of community running events where participants wear denim as a symbol of solidarity with survivors. Rooted in Summer\'s own journey with Project 29, these runs are about more than miles — they are acts of defiance against silence, shame, and victim-blaming. Every stride is a statement: we believe survivors.',
+    details: [
+      'Open to runners of all levels — walkers always welcome',
+      'Participants wear denim as a symbol of survivor solidarity',
+      'Each run features survivor-led storytelling moments',
+      'Funds raised support SWF advocacy and community programs',
+    ],
+    stats: [
+      { value: '29', label: 'Marathons by our founder' },
+      { value: '12+', label: 'Community run events held' },
+      { value: '3,000+', label: 'Participants across events' },
+    ],
+    bg: 'var(--c-bg-teal)',
+    accent: 'var(--c-primary)',
+    cta: 'Join a Run',
+    ctaHref: '/contact',
+    upcomingEvent: {
+      badge: 'Upcoming Event',
+      description: 'The Denim Run is more than just an event — it\'s a movement. The first-ever national race series for survivors and by survivors, launching in <strong>2026</strong> across <strong>Los Angeles</strong>, <strong>Austin</strong>, and <strong>New York City</strong>, with a virtual option for all — a chance to celebrate community and resilience while sending a powerful message against shame and stigma.',
+      locations: ['📍 Los Angeles', '📍 Austin', '📍 New York City', '💻 Virtual'],
+      cta: 'Join a Run',
+      ctaHref: 'https://raceroster.com/events/2026/113378/the-denim-run',
+    },
+  },
+  {
+    id: 'legislation',
+    icon: '⚖️',
+    title: 'Legislation',
+    tagline: 'Because laws must keep up with reality.',
+    description: 'Sexual violence thrives when legal systems fail survivors. Our Legislation campaign advocates for policy reform at local, state, and federal levels — fighting for stronger protections, fairer processes, and accountability. We believe bipartisan collaboration is key: protecting survivors is not a political issue, it is a human one.',
+    details: [
+      'Monitoring and responding to legislation affecting survivors',
+      'Equipping community members to contact their representatives',
+      'Partnering with legal advocates and policy experts',
+      'Building bipartisan coalitions to advance survivor-protective laws',
+    ],
+    stats: [
+      { value: '12', label: 'Policy initiatives supported' },
+      { value: '6', label: 'States with active advocacy' },
+      { value: '40+', label: 'Legislative briefings attended' },
+    ],
+    bg: 'var(--c-bg-blue)',
+    accent: 'var(--c-blue)',
+    cta: 'Take Action',
+    ctaHref: '/contact',
+    highlight: {
+      badge: 'Legislative Win',
+      title: 'The Summer Willis Act',
+      description: 'A historic victory for survivors in Texas. This 2025 legislation closes legal loopholes and provides the first affirmative definition of consent in Texas sexual assault law — ensuring that those who are intoxicated or impaired by any substance are legally protected from sexual violence.',
+      cta: 'Read More',
+      ctaHref: 'https://www.pbs.org/newshour/show/texas-lawmakers-try-to-close-loopholes-in-consent-laws',
+    },
+  },
+  {
+    id: 'resource-map',
+    icon: '🗺️',
+    title: 'The Resource Map',
+    tagline: 'No survivor should have to search alone.',
+    description: 'The Summer Willis Foundation\'s Resource Map is the first comprehensive national directory connecting survivors of sexual and domestic violence to vetted legal, medical, mental health, and protective services — designed by survivors, for survivors, and grounded in trauma-informed care. By consolidating fragmented resources at both the campus and community level, it eliminates the burden of repeated disclosure and creates a low-stigma, low-effort entry point into care when survivors need it most. Piloting first in Texas, the Resource Map is built to scale nationwide, with the goal of measurably reducing re-traumatization and transforming how survivors across the country find help.',
+    details: [
+      'Searchable by location, service type, and language',
+      'Vetted and trauma-informed service listings',
+      'Continuously updated with new community partners',
+      'Available in multiple languages',
+    ],
+    stats: [
+      { value: '60+', label: 'Partner organizations listed' },
+      { value: '1,400+', label: 'Survivor referrals made' },
+      { value: '24/7', label: 'Crisis resources available' },
+    ],
+    bg: 'var(--c-bg-yellow)',
+    accent: 'var(--c-yellow)',
+    cta: 'Explore the Map',
+    ctaHref: '/contact',
+    decorIcon: '/images/icons/SWF - You Are Here.png',
+  },
+  {
+    id: 'letter-film',
+    icon: '🎬',
+    title: '"A Letter to My Younger Self" Film',
+    tagline: 'Transformative storytelling. Told by survivors, for survivors.',
+    description: 'When the Summer Willis Act passed in Texas — finally making Summer\'s own assault legally recognized 10 years after it occurred — she wrote a letter to herself in the aftermath, and that letter became the foundation for a six-minute animated short film tracing what one night can take and the decade it can steal. The project brought together an extraordinary team, with animator Hisko Hulsing and his Undone team bringing the vision to life, and Soledad O\'Brien, Mariska Hargitay, Regina Scully, Monica Lewinsky, and Dini Von Mueffling joining as Executive Producers. The film is what many survivors on the team wish they\'d had after their own assaults: an honest acknowledgment of how hard healing is, and proof that pain can become purpose.',
+    details: [
+      'Survivor-led storytelling — participants own their narratives',
+      'Trauma-informed film production process',
+      'Screenings paired with community conversations',
+      'Educational curriculum available for schools and organizations',
+    ],
+    stats: [
+      { value: '30+', label: 'Survivor stories captured' },
+      { value: '15+', label: 'Screening events held' },
+      { value: '5K+', label: 'Viewers reached' },
+    ],
+    bg: 'var(--c-bg-pink)',
+    accent: 'var(--c-pink-dark)',
+    cta: 'Watch & Learn',
+    ctaHref: '/contact',
+  },
+];
+---
+
+<Layout title="Campaigns" description="Explore Summer Willis Foundation campaigns: The Denim Runs, Legislation advocacy, The Resource Map, and our film project.">
+
+  <section class="page-header">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="header-sun" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="sun-bl" aria-hidden="true" />
+    <div class="container">
+      <h1>Our Campaigns</h1>
+      <p>Bold, community-driven initiatives creating change at every level — individual, community, and systemic.</p>
+    </div>
+  </section>
+
+  {campaigns.map((campaign) => (
+    <section id={campaign.id} class="section campaign-section" style={`background: ${campaign.bg};`}>
+      {campaign.decorIcon && (
+        <img src={campaign.decorIcon} alt="" class="campaign-decor-icon" aria-hidden="true" />
+      )}
+      <div class="container campaign-grid">
+        <div class="campaign-content">
+          <div class="campaign-icon">{campaign.icon}</div>
+          <h2>{campaign.title}</h2>
+          <p class="campaign-tagline" style={`color: ${campaign.accent};`}>{campaign.tagline}</p>
+          <p class="campaign-desc">{campaign.description}</p>
+          <ul class="campaign-details">
+            {campaign.details.map(detail => (
+              <li>{detail}</li>
+            ))}
+          </ul>
+          {!campaign.upcomingEvent && (
+            <a href={campaign.ctaHref} class="btn btn-primary" style={`margin-top: 1.5rem; background: ${campaign.accent}; border-color: ${campaign.accent};`}>{campaign.cta}</a>
+          )}
+        </div>
+        <div class="campaign-stats">
+          {campaign.stats.map(stat => (
+            <div class="stat-card">
+              <div class="stat-value" style={`color: ${campaign.accent};`}>{stat.value}</div>
+              <div class="stat-label">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {campaign.highlight && (
+        <div class="container">
+          <div class="campaign-highlight" style={`border-color: ${campaign.accent};`}>
+            <div class="campaign-highlight-badge" style={`background: ${campaign.accent};`}>{campaign.highlight.badge}</div>
+            <div class="campaign-highlight-inner">
+              <div class="campaign-highlight-content">
+                <h3>{campaign.highlight.title}</h3>
+                <p>{campaign.highlight.description}</p>
+                {campaign.highlight.cta && (
+                  <a href={campaign.highlight.ctaHref} class="btn btn-outline" style={`margin-top: 1.25rem; color: ${campaign.accent}; border-color: ${campaign.accent};`} target="_blank" rel="noopener noreferrer">{campaign.highlight.cta}</a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {campaign.upcomingEvent && (
+        <div class="container">
+          <div class="upcoming-event">
+            <div class="upcoming-event-badge">{campaign.upcomingEvent.badge}</div>
+            <div class="upcoming-event-inner">
+              <div class="upcoming-event-icon">{campaign.icon}</div>
+              <div class="upcoming-event-content">
+                <h3>Run with Us</h3>
+                <p set:html={campaign.upcomingEvent.description} />
+                <div class="action-locations">
+                  {campaign.upcomingEvent.locations.map(loc => (
+                    <span class="location-tag">{loc}</span>
+                  ))}
+                </div>
+                <a href={campaign.upcomingEvent.ctaHref} class="btn btn-primary" style={`margin-top: 1.5rem; background: ${campaign.accent}; border-color: ${campaign.accent};`} target="_blank" rel="noopener noreferrer">{campaign.upcomingEvent.cta}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  ))}
+
+  <!-- Partner CTA -->
+  <section class="section partner-section">
+    <div class="container partner-inner">
+      <h2>Partner With Us</h2>
+      <p>Are you a school, business, or organization that wants to take a stand against sexual violence? Let's work together to shift culture and protect our community.</p>
+      <a href="/contact" class="btn btn-primary">Reach Out</a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .header-sun {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 220px;
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+
+  .campaign-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .campaign-decor-icon {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 180px;
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .campaign-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+  .campaign-content h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  .campaign-tagline {
+    font-size: 1rem;
+    font-weight: 600;
+    font-style: italic;
+    margin: 0 0 1rem;
+  }
+
+  .campaign-desc {
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .campaign-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .campaign-details li {
+    font-size: 0.9rem;
+    color: #374151;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .campaign-details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--c-primary);
+  }
+
+  .campaign-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+
+  /* Legislative / campaign highlight card */
+  .campaign-highlight {
+    margin-top: 2.5rem;
+    border: 2px solid;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+  }
+
+  .campaign-highlight-badge {
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .campaign-highlight-content {
+    padding: 2rem;
+  }
+
+  .campaign-highlight-content h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: #111827;
+  }
+
+  .campaign-highlight-content p {
+    color: #4b5563;
+    line-height: 1.75;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  /* Upcoming Event (inline within campaign section) */
+  .upcoming-event {
+    margin-top: 2.5rem;
+    border: 2px solid rgba(0,0,0,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+  }
+
+  .upcoming-event-badge {
+    background: var(--c-primary);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .upcoming-event-inner {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+
+  .upcoming-event-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+
+  .upcoming-event-content h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: #111827;
+  }
+
+  .upcoming-event-content p {
+    color: #4b5563;
+    line-height: 1.75;
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+  }
+
+  .action-locations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .location-tag {
+    display: inline-block;
+    background: var(--c-bg-teal);
+    border: 1px solid var(--c-primary);
+    color: var(--c-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+  }
+
+  .partner-section {
+    background: var(--c-primary-dark);
+    color: white;
+    text-align: center;
+  }
+
+  .partner-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .partner-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .partner-section p {
+    color: rgba(255,255,255,0.8);
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .campaign-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .campaign-stats { flex-direction: row; flex-wrap: wrap; }
+    .stat-card { flex: 1; min-width: 140px; }
+    .upcoming-event-inner { flex-direction: column; gap: 1rem; }
+  }
+</style>

@@ -1,0 +1,361 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const volunteerRoles = [
+  { icon: '📣', title: 'Community Educator', commitment: '4–6 hrs/month', desc: 'Lead awareness workshops at schools, workplaces, and community organizations to shift culture and prevent harm.' },
+  { icon: '🤝', title: 'Healing Circle Facilitator', commitment: 'Training required', desc: 'Facilitate trauma-informed survivor support groups after completing our facilitator training program.' },
+  { icon: '📋', title: 'Survivor Navigator', commitment: '5 hrs/week', desc: 'Walk alongside survivors to help them connect with counseling, legal support, and other essential resources.' },
+  { icon: '💻', title: 'Skills Volunteer', commitment: 'Project-based', desc: 'Offer your professional skills — marketing, legal, IT, design, or communications — on a project basis.' },
+];
+---
+
+<Layout title="Get Involved" description="Volunteer or donate to Summer Willis Foundation and help build a stronger community.">
+
+  <section class="page-header">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="sun-bl" aria-hidden="true" />
+    <div class="container">
+      <h1>Get Involved</h1>
+      <p>Your time, voice, and generosity help survivors heal and communities change.</p>
+    </div>
+  </section>
+
+  <!-- Volunteer -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Volunteer With Us</h2>
+      <p class="section-subtitle">Join our network of advocates and allies working to support survivors and prevent future harm.</p>
+      <div class="roles-grid">
+        {volunteerRoles.map(role => (
+          <div class="role-card">
+            <div class="role-icon">{role.icon}</div>
+            <div class="role-content">
+              <h3>{role.title}</h3>
+              <span class="commitment">{role.commitment}</span>
+              <p>{role.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="volunteer-form-box">
+        <h3>Sign Up to Volunteer</h3>
+        <form class="form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="v-name">Full Name</label>
+              <input type="text" id="v-name" placeholder="Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label for="v-email">Email</label>
+              <input type="email" id="v-email" placeholder="jane@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="v-role">Area of Interest</label>
+            <select id="v-role">
+              <option value="">Select a role...</option>
+              <option>Community Educator</option>
+              <option>Healing Circle Facilitator</option>
+              <option>Survivor Navigator</option>
+              <option>Skills Volunteer</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="v-message">Tell us a bit about yourself (optional)</label>
+            <textarea id="v-message" rows="3" placeholder="Skills, availability, questions..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Interest Form</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donate -->
+  <section id="donate" class="section donate-section">
+    <div class="container">
+      <div class="donate-intro">
+        <h2 class="donate-intro-title">Donate Today</h2>
+        <p class="donate-intro-sub">Your support is the lifeline that fuels the Summer Willis Foundation.<br />Every stride, every run, every story matters — and none of it is possible without you.</p>
+      </div>
+    </div>
+    <div class="container donate-inner">
+      <div class="donate-text">
+        <h2 class="section-title">Make a Donation</h2>
+        <p class="section-subtitle">Every dollar goes directly to programs that support survivors and drive systemic change. Summer Willis Foundation is a 501(c)(3) organization — your gift is tax-deductible.</p>
+        <ul class="impact-list">
+          <li>💛 <strong>$25</strong> provides educational resources to one survivor</li>
+          <li>🤝 <strong>$100</strong> helps fund a healing circle session</li>
+          <li>📣 <strong>$250</strong> supports a community awareness campaign</li>
+          <li>🌟 <strong>$1,000</strong> sponsors a full program cycle for survivors</li>
+        </ul>
+      </div>
+      <div class="donate-box">
+        <h3>Choose an Amount</h3>
+        <div class="amount-grid">
+          {['$25', '$50', '$100', '$250'].map(amt => (
+            <button class="amount-btn">{amt}</button>
+          ))}
+        </div>
+        <div class="form-group">
+          <label for="custom-amount">Or enter a custom amount</label>
+          <input type="number" id="custom-amount" placeholder="$0.00" />
+        </div>
+        <div class="frequency-row">
+          <label class="radio-label">
+            <input type="radio" name="frequency" checked /> One-time
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="frequency" /> Monthly
+          </label>
+        </div>
+        <button class="donate-btn">Donate Securely</button>
+        <p class="donate-note">🔒 Secure checkout. 100% goes to programs.</p>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .role-card {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .role-icon { font-size: 2rem; flex-shrink: 0; }
+
+  .role-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.2rem;
+  }
+
+  .commitment {
+    display: inline-block;
+    background: var(--c-bg-teal);
+    color: var(--c-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-content p {
+    font-size: 0.9rem;
+    color: #6b7280;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .volunteer-form-box {
+    background: var(--c-bg-teal);
+    border: 1px solid var(--c-blue-light);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 680px;
+  }
+
+  .volunteer-form-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #111827;
+    background: white;
+    transition: border-color 0.15s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(0, 144, 157, 0.12);
+  }
+
+  /* Donate */
+  .donate-section { background: var(--c-bg-yellow); }
+
+  .donate-intro {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3rem;
+  }
+
+  .donate-intro-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.75rem;
+  }
+
+  .donate-intro-sub {
+    font-size: 1.15rem;
+    color: #6b7280;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .donate-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .impact-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .impact-list li {
+    font-size: 0.95rem;
+    color: #374151;
+  }
+
+  .donate-box {
+    background: white;
+    border: 1px solid var(--c-yellow-light);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .donate-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+  }
+
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .amount-btn {
+    padding: 0.6rem;
+    border: 2px solid var(--c-yellow);
+    background: var(--c-bg-yellow);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: inherit;
+    color: #111827;
+  }
+
+  .amount-btn:hover {
+    border-color: var(--c-yellow);
+    background: var(--c-yellow);
+  }
+
+  .frequency-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .donate-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: var(--c-pink-dark);
+    color: white;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .donate-btn:hover {
+    background: var(--c-pink);
+    transform: translateY(-1px);
+  }
+
+  .donate-note {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    text-align: center;
+    margin: 0.75rem 0 0;
+  }
+
+  @media (max-width: 768px) {
+    .roles-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .donate-inner { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

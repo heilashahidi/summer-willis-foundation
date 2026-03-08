@@ -1,0 +1,279 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  {
+    date: 'February 28, 2026',
+    category: 'Impact Story',
+    title: 'How the Food Pantry Helped One Family Through a Tough Winter',
+    excerpt: 'Maria and her three children came to us after an unexpected job loss. Here\'s how our team rallied to keep their lights on and their refrigerator full.',
+    emoji: '🥗',
+    categoryColor: 'var(--c-primary)',
+  },
+  {
+    date: 'February 14, 2026',
+    category: 'Volunteer Spotlight',
+    title: 'Meet James: 5 Years of Saturday Mornings at the Pantry',
+    excerpt: 'James started volunteering "just for a month" in 2021. Five years and 260 Saturdays later, he wouldn\'t trade it for anything.',
+    emoji: '🤝',
+    categoryColor: 'var(--c-blue)',
+  },
+  {
+    date: 'January 30, 2026',
+    category: 'Program Update',
+    title: 'Expanding Our Housing Program: What\'s New in 2026',
+    excerpt: 'Thanks to a $150K grant, we\'re adding two new case managers and doubling our emergency rental assistance capacity this year.',
+    emoji: '🏠',
+    categoryColor: 'var(--c-primary)',
+  },
+  {
+    date: 'January 12, 2026',
+    category: 'Community News',
+    title: 'Summer Willis Foundation Partners with Three Local Schools for Backpack Program',
+    excerpt: 'Starting this spring, students at Lincoln, Madison, and Roosevelt Elementary will receive weekend food packs through our new school partnership.',
+    emoji: '🎒',
+    categoryColor: 'var(--c-blue)',
+  },
+  {
+    date: 'December 18, 2025',
+    category: 'Annual Report',
+    title: '2025 Year in Review: By the Numbers',
+    excerpt: 'We served 4,200+ families, distributed 18,000 meals, assisted with 340 housing cases, and welcomed 320 new volunteers. Read our full annual report.',
+    emoji: '📊',
+    categoryColor: 'var(--c-primary)',
+  },
+  {
+    date: 'November 25, 2025',
+    category: 'Event Recap',
+    title: 'Giving Tuesday Raises $42,000 — Thank You!',
+    excerpt: 'Our community showed up in a big way this Giving Tuesday. Here\'s how those funds will be put to work in the months ahead.',
+    emoji: '💛',
+    categoryColor: 'var(--c-primary-dark)',
+  },
+];
+---
+
+<Layout title="Blog & News" description="News, stories, and updates from Summer Willis Foundation.">
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Blog & News</h1>
+      <p>Stories of impact, program updates, and community news.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Featured post -->
+      <div class="featured-post">
+        <div class="featured-emoji">{posts[0].emoji}</div>
+        <div class="featured-content">
+          <div class="post-meta">
+            <span class="category" style={`background: ${posts[0].categoryColor};`}>{posts[0].category}</span>
+            <span class="date">{posts[0].date}</span>
+          </div>
+          <h2>{posts[0].title}</h2>
+          <p>{posts[0].excerpt}</p>
+          <a href="#" class="btn btn-primary">Read Story</a>
+        </div>
+      </div>
+
+      <!-- Post grid -->
+      <h3 class="grid-heading">More Stories</h3>
+      <div class="posts-grid">
+        {posts.slice(1).map(post => (
+          <article class="post-card">
+            <div class="post-emoji">{post.emoji}</div>
+            <div class="post-meta">
+              <span class="category" style={`background: ${post.categoryColor};`}>{post.category}</span>
+              <span class="date">{post.date}</span>
+            </div>
+            <h3>{post.title}</h3>
+            <p>{post.excerpt}</p>
+            <a href="#" class="read-link">Read more →</a>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter-section section">
+    <div class="container newsletter-inner">
+      <div>
+        <h2>Stay in the Loop</h2>
+        <p>Get our monthly newsletter with stories, updates, and ways to help.</p>
+      </div>
+      <form class="newsletter-form">
+        <input type="email" placeholder="you@example.com" aria-label="Email address" />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+
+  .featured-post {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    background: var(--c-bg-teal);
+    border: 1px solid var(--c-blue-light);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    align-items: center;
+  }
+
+  .featured-emoji { font-size: 4rem; }
+
+  .featured-content h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .featured-content p {
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .category {
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+  }
+
+  .date { font-size: 0.85rem; color: #6b7280; }
+
+  .grid-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: #374151;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+  }
+
+  .post-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+  .post-emoji { font-size: 2rem; margin-bottom: 0.75rem; }
+
+  .post-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0.5rem 0 0.5rem;
+    line-height: 1.4;
+  }
+
+  .post-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+
+  .read-link {
+    color: var(--c-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  /* Newsletter */
+  .newsletter-section {
+    background: var(--c-primary-dark);
+    color: white;
+  }
+
+  .newsletter-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+
+  .newsletter-section p { color: rgba(255,255,255,0.8); margin: 0; }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-form input {
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+    min-width: 240px;
+  }
+
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+  .newsletter-form input:focus { outline: none; border-color: var(--c-yellow); }
+
+  @media (max-width: 768px) {
+    .featured-post { grid-template-columns: 1fr; }
+    .featured-emoji { display: none; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .newsletter-inner { flex-direction: column; }
+    .newsletter-form input { min-width: 0; width: 100%; }
+    .newsletter-form { width: 100%; flex-direction: column; }
+    .newsletter-form .btn { width: 100%; text-align: center; }
+  }
+
+  @media (min-width: 640px) and (max-width: 900px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
