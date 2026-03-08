@@ -75,6 +75,7 @@ const serviceTypes = [
 
   <!-- Service Explanations -->
   <section class="section services-section">
+    <img src="/images/icons/SWF - You Are Here.png" alt="" class="decor-icon decor-tl" aria-hidden="true" />
     <div class="container">
       <h2 class="section-title">Understanding the Services</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
@@ -158,8 +159,19 @@ const serviceTypes = [
     opacity: 0.85;
   }
 
+  .decor-icon {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-tl { top: 16px; left: 16px; }
+
   /* Services */
   .services-section {
+    position: relative;
+    overflow: hidden;
     background: #f9fafb;
   }
 

@@ -9,8 +9,9 @@ import HeroSlider from '../components/HeroSlider.astro';
 
   <!-- Hero -->
   <section class="hero">
-    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun" aria-hidden="true" />
-    <img src="/images/icons/SWF - Sun.png" alt="" class="sun-bl" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-1" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-2" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-3" aria-hidden="true" />
     <div class="container">
       <div class="hero-content">
         <span class="hero-badge">501(c)(3) Non-Profit</span>
@@ -50,6 +51,7 @@ import HeroSlider from '../components/HeroSlider.astro';
 
   <!-- Founder Story -->
   <section class="section story-section">
+    <img src="/images/icons/SWF - You Are Here.png" alt="" class="decor-icon decor-bl" aria-hidden="true" />
     <div class="container story-grid">
       <div class="story-image">
         <img src="/images/photos/summer1.jpg" alt="Summer Willis running — strength through strides" />
@@ -92,6 +94,8 @@ import HeroSlider from '../components/HeroSlider.astro';
 
   <!-- Programs Preview -->
   <section class="section programs-section">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="decor-icon decor-tl" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="decor-icon decor-br" aria-hidden="true" />
     <div class="container">
       <h2 class="section-title">Our Campaigns</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
@@ -166,11 +170,21 @@ import HeroSlider from '../components/HeroSlider.astro';
               </div>
             </div>
           </div>
+          <div class="voice-card quote-blue">
+            <span class="voice-quotemark" aria-hidden="true">&ldquo;</span>
+            <p class="voice-quote">Being part of this foundation has reminded me that real change starts with one person choosing to speak — and others choosing to listen.</p>
+            <div class="voice-author">
+              <div class="voice-avatar">🌟</div>
+              <div>
+                <div class="voice-name">Heila S.</div>
+                <div class="voice-role">SWF Team</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="voices-controls">
           <button class="voices-arrow" id="voices-prev" aria-label="Previous">&#8592;</button>
-          <div class="voices-dots" id="voices-dots"></div>
           <button class="voices-arrow" id="voices-next" aria-label="Next">&#8594;</button>
         </div>
       </div>
@@ -281,12 +295,29 @@ import HeroSlider from '../components/HeroSlider.astro';
 
   .hero-sun {
     position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 280px;
     height: auto;
-    opacity: 0.12;
     pointer-events: none;
+  }
+  /* Closest / brightest */
+  .hero-sun-1 {
+    top: -30px;
+    right: -30px;
+    width: 280px;
+    opacity: 0.35;
+  }
+  /* Middle */
+  .hero-sun-2 {
+    top: -60px;
+    right: -60px;
+    width: 400px;
+    opacity: 0.20;
+  }
+  /* Furthest / faintest */
+  .hero-sun-3 {
+    top: -90px;
+    right: -90px;
+    width: 520px;
+    opacity: 0.08;
   }
 
   .hero-content {
@@ -359,8 +390,24 @@ import HeroSlider from '../components/HeroSlider.astro';
 
   .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
 
+  /* Decorative icons */
+  .decor-icon {
+    position: absolute;
+    width: 180px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-sm { width: 90px; }
+  .decor-br { bottom: 16px; right: 16px; }
+  .decor-tl { top: 16px; left: 16px; }
+  .decor-tr { top: 16px; right: 16px; }
+  .decor-bl { bottom: 16px; left: 16px; }
+
   /* Stats */
   .stats-section {
+    position: relative;
+    overflow: hidden;
     background: var(--c-bg-teal);
     padding: 3rem 0;
     border-bottom: 1px solid var(--c-blue-light);
@@ -400,7 +447,7 @@ import HeroSlider from '../components/HeroSlider.astro';
   }
 
   /* Founder Story */
-  .story-section { background: #f9fafb; }
+  .story-section { position: relative; overflow: hidden; background: #f9fafb; }
 
   .story-grid {
     display: grid;
@@ -495,7 +542,7 @@ import HeroSlider from '../components/HeroSlider.astro';
   }
 
   /* Programs */
-  .programs-section { background: #f9fafb; }
+  .programs-section { position: relative; overflow: hidden; background: #f9fafb; }
 
   .programs-grid {
     display: grid;
@@ -571,6 +618,8 @@ import HeroSlider from '../components/HeroSlider.astro';
   .voices-carousel {
     position: relative;
     overflow: hidden;
+    padding: 1rem;
+    margin: -1rem;
   }
 
   .voices-track {
@@ -632,23 +681,23 @@ import HeroSlider from '../components/HeroSlider.astro';
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: none;
-    background: #d1d5db;
+    border: 2px solid #d1d5db;
+    background: transparent;
     cursor: pointer;
     padding: 0;
-    transition: background 0.2s, transform 0.2s;
+    transition: border-color 0.2s;
   }
 
   :global(.voices-dot.active) {
-    background: var(--c-primary);
-    transform: scale(1.3);
+    border-color: var(--c-primary);
+    background: transparent;
   }
 
   /* White card base */
   .voice-card {
     background: white;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
   }
 
   .quote-teal  .voice-quotemark { color: var(--c-primary); }

@@ -101,6 +101,8 @@ const posts = [
 
   <!-- Newsletter -->
   <section class="newsletter-section section">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="decor-icon decor-bl" aria-hidden="true" />
+    <img src="/images/icons/SWF - You Are Here.png" alt="" class="decor-icon decor-tr" aria-hidden="true" />
     <div class="container newsletter-inner">
       <div>
         <h2>Stay in the Loop</h2>
@@ -220,8 +222,20 @@ const posts = [
     font-weight: 600;
   }
 
+  .decor-icon {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-bl { bottom: 16px; left: 16px; }
+  .decor-tr { top: 16px; right: 16px; }
+
   /* Newsletter */
   .newsletter-section {
+    position: relative;
+    overflow: hidden;
     background: var(--c-primary-dark);
     color: white;
   }

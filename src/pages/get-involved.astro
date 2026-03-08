@@ -73,6 +73,7 @@ const volunteerRoles = [
 
   <!-- Donate -->
   <section id="donate" class="section donate-section">
+    <img src="/images/icons/SWF - You Are Here.png" alt="" class="decor-icon decor-tr" aria-hidden="true" />
     <div class="container">
       <div class="donate-intro">
         <h2 class="donate-intro-title">Donate Today</h2>
@@ -231,8 +232,17 @@ const volunteerRoles = [
     box-shadow: 0 0 0 3px rgba(0, 144, 157, 0.12);
   }
 
+  .decor-icon {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-tr { top: 16px; right: 16px; }
+
   /* Donate */
-  .donate-section { background: var(--c-bg-yellow); }
+  .donate-section { position: relative; overflow: hidden; background: var(--c-bg-yellow); }
 
   .donate-intro {
     text-align: center;

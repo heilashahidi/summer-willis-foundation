@@ -90,6 +90,7 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- Tenets -->
   <section class="section tenets-section">
+    <img src="/images/icons/SWF - You Are Here.png" alt="" class="decor-icon decor-br" aria-hidden="true" />
     <div class="container">
       <h2 class="section-title">How We Create Change</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
@@ -173,6 +174,7 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- Advisory Board -->
   <section class="section advisory-section">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="decor-icon decor-tr" aria-hidden="true" />
     <div class="container">
       <h2 class="section-title">Advisory Board</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
@@ -609,7 +611,20 @@ import Layout from '../layouts/Layout.astro';
     margin: 0;
   }
 
-  .advisory-section { background: #f9fafb; }
+  .decor-icon {
+    position: absolute;
+    width: 180px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-br { bottom: 16px; right: 16px; }
+  .decor-tr { top: 16px; right: 16px; }
+  .decor-tl { top: 16px; left: 16px; }
+  .decor-bl { bottom: 16px; left: 16px; }
+
+  .tenets-section { position: relative; overflow: hidden; }
+  .advisory-section { position: relative; overflow: hidden; background: #f9fafb; }
 
   .advisory-grid {
     display: grid;
