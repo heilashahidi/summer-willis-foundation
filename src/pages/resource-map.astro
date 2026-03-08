@@ -1,0 +1,235 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ResourceMap from '../components/ResourceMap';
+import '../styles/tailwind.css';
+
+const serviceTypes = [
+  {
+    icon: '⚖️',
+    name: 'Pro Bono Legal',
+    color: 'var(--c-primary)',
+    bg: 'var(--c-bg-teal)',
+    border: 'var(--c-primary)',
+    description: 'Free or reduced-cost legal representation and advice for survivors navigating the justice system. Pro bono attorneys can help with protective orders, Title IX complaints, civil suits, and more — ensuring every survivor has access to legal support regardless of financial situation.',
+  },
+  {
+    icon: '🏥',
+    name: 'SANE Program',
+    color: 'var(--c-primary-dark)',
+    bg: 'var(--c-bg-teal)',
+    border: 'var(--c-primary-dark)',
+    description: 'Sexual Assault Nurse Examiner (SANE) programs provide specialized, trauma-informed medical care after an assault. SANE nurses are trained to conduct forensic exams, preserve evidence, treat injuries, and connect survivors with follow-up support — all in a confidential, compassionate setting.',
+  },
+  {
+    icon: '💜',
+    name: 'Sexual Violence Services',
+    color: 'var(--c-pink-dark)',
+    bg: 'var(--c-bg-pink)',
+    border: 'var(--c-pink-dark)',
+    description: 'Comprehensive support services for survivors of sexual violence, including crisis intervention, counseling, advocacy, and case management. These organizations provide trauma-informed care and can walk alongside survivors at every stage of their healing journey.',
+  },
+  {
+    icon: '🏠',
+    name: 'Shelter / Safe House',
+    color: 'var(--c-blue)',
+    bg: 'var(--c-bg-blue)',
+    border: 'var(--c-blue)',
+    description: 'Emergency and transitional housing for survivors who need a safe place to go. Shelters provide confidential, secure accommodations along with on-site support services, case management, and resources to help survivors stabilize and plan for the future.',
+  },
+  {
+    icon: '🧠',
+    name: 'Counseling & Therapy',
+    color: 'var(--c-yellow)',
+    bg: 'var(--c-bg-yellow)',
+    border: 'var(--c-yellow)',
+    description: 'Trauma-informed mental health support from licensed therapists and counselors who specialize in sexual violence recovery. Services may include individual therapy, group therapy, EMDR, and other evidence-based approaches to help survivors process and heal.',
+  },
+  {
+    icon: '📞',
+    name: 'Crisis Hotlines',
+    color: 'var(--c-pink)',
+    bg: 'var(--c-bg-pink)',
+    border: 'var(--c-pink)',
+    description: 'Confidential, 24/7 crisis support lines staffed by trained advocates. Whether you need to talk, need help making a safety plan, or just aren\'t sure what to do next — hotline advocates are here to listen without judgment and connect you with local resources.',
+  },
+];
+---
+
+<Layout title="Resource Map" description="Find survivor support resources near you — the Summer Willis Foundation Resource Map.">
+
+  <section class="page-header">
+    <img src="/images/icons/SWF - Sun.png" alt="" class="header-sun" aria-hidden="true" />
+    <div class="container">
+      <h1>Resource Map</h1>
+      <p>Find vetted survivor support services near you — searchable by location and type.</p>
+    </div>
+  </section>
+
+  <section class="map-section">
+    <div class="container">
+      <div class="map-wrapper">
+        <ResourceMap client:only="react" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Explanations -->
+  <section class="section services-section">
+    <div class="container">
+      <h2 class="section-title">Understanding the Services</h2>
+      <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
+      <p class="section-subtitle">Not sure what type of support you're looking for? Here's a breakdown of each service category on the map.</p>
+      <div class="services-grid">
+        {serviceTypes.map(service => (
+          <div class="service-card" style={`background: ${service.bg}; border-top-color: ${service.border};`}>
+            <div class="service-icon">{service.icon}</div>
+            <h3 style={`color: ${service.color};`}>{service.name}</h3>
+            <p>{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-strip section">
+    <div class="container cta-inner">
+      <div>
+        <h2>Not sure where to start?</h2>
+        <p>Reach out to us directly — we can help connect you with the right resources.</p>
+      </div>
+      <a href="/contact" class="btn btn-primary">Contact Us</a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .header-sun {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 220px;
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  .map-section {
+    padding: 3rem 0 2rem;
+  }
+
+  .map-wrapper {
+    height: 740px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--c-blue-light);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-underline {
+    height: 28px;
+    width: auto;
+    display: block;
+    margin: 0.4rem 0 1.25rem;
+    opacity: 0.85;
+  }
+
+  /* Services */
+  .services-section {
+    background: #f9fafb;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    border-radius: 12px;
+    padding: 1.75rem;
+    border-top: 4px solid transparent;
+    transition: box-shadow 0.2s;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta-strip {
+    background: var(--c-bg-yellow);
+    border-top: 2px solid var(--c-yellow);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-inner h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+
+  .cta-inner p {
+    color: #6b7280;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .map-wrapper { height: 500px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .cta-inner { flex-direction: column; text-align: center; }
+  }
+
+  @media (min-width: 640px) and (max-width: 900px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
