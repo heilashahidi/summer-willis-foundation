@@ -55,6 +55,19 @@ const jsonLd = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script is:inline>
+      // Suppress small JS-triggered scroll adjustments from GiveButter widget init
+      // Anchor navigation uses CSS scroll-behavior so it's unaffected
+      const _scrollTo = window.scrollTo.bind(window);
+      window.scrollTo = function(x, y) {
+        const opts = (typeof x === 'object' && x !== null) ? x : { left: x, top: y };
+        const targetTop = opts.top !== undefined ? opts.top : window.scrollY;
+        if (Math.abs(targetTop - window.scrollY) > window.innerHeight * 0.3) {
+          _scrollTo({ ...opts, behavior: 'smooth' });
+        }
+      };
+      Element.prototype.scrollIntoView = function() {};
+    </script>
     <script is:inline async src="https://widgets.givebutter.com/latest.umd.cjs?acct=eoFddejDzFLCJ710&p=other"></script>
     <meta name="generator" content={Astro.generator} />
     <SEO
@@ -86,6 +99,7 @@ const jsonLd = {
     <Nav />
     <slot />
     <Footer />
+    <givebutter-widget id="jwPoeL"></givebutter-widget>
   </body>
 </html>
 
@@ -117,6 +131,7 @@ const jsonLd = {
 
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
   }
 
   html, body {
