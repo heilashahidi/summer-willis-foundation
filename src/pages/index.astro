@@ -12,6 +12,9 @@ import HeroSlider from '../components/HeroSlider.astro';
     <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-1" aria-hidden="true" />
     <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-2" aria-hidden="true" />
     <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-3" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-4" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-5" aria-hidden="true" />
+    <img src="/images/icons/SWF - Sun.png" alt="" class="hero-sun hero-sun-6" aria-hidden="true" />
     <div class="container">
       <div class="hero-content">
         <span class="hero-badge">501(c)(3) Non-Profit</span>
@@ -311,24 +314,41 @@ import HeroSlider from '../components/HeroSlider.astro';
     height: auto;
     pointer-events: none;
   }
-  /* Closest / brightest */
+  /* Top-right — center at 100px inside corner */
   .hero-sun-1 {
-    top: -30px;
-    right: -30px;
+    top: -40px;
+    right: -40px;
     width: 280px;
     opacity: 0.35;
   }
-  /* Middle */
   .hero-sun-2 {
-    top: -60px;
-    right: -60px;
+    top: -100px;
+    right: -100px;
     width: 400px;
     opacity: 0.20;
   }
-  /* Furthest / faintest */
   .hero-sun-3 {
-    top: -90px;
-    right: -90px;
+    top: -160px;
+    right: -160px;
+    width: 520px;
+    opacity: 0.08;
+  }
+  /* Bottom-left mirror — center at 100px inside corner */
+  .hero-sun-4 {
+    bottom: -40px;
+    left: -40px;
+    width: 280px;
+    opacity: 0.35;
+  }
+  .hero-sun-5 {
+    bottom: -100px;
+    left: -100px;
+    width: 400px;
+    opacity: 0.20;
+  }
+  .hero-sun-6 {
+    bottom: -160px;
+    left: -160px;
     width: 520px;
     opacity: 0.08;
   }
