@@ -1,18 +1,104 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { HEX_TO_CLASS } from '../lib/constants';
+
+const advisors = [
+  {
+    name: 'Kelly Joseph',
+    role: 'Founder, La Sœur Fund',
+    initials: 'KJ',
+    color: '#00909d',
+    photo: '/images/headshots/Kelly_Joseph.png',
+    photoScale: 1.1,
+    photoPosition: '30% 20%',
+    bio: [
+      'Kelly Shawn Joseph is a specialist in preventing and responding to violence against women and girls across humanitarian, development, and crisis-affected contexts, including Afghanistan, Bangladesh, Central African Republic, Iraq, Lebanon, Mali, Somalia, and Ukraine. Her work focuses on strengthening survivor-centered prevention and response systems in complex and politically constrained environments.',
+      'She is the Founder of La Sœur Fund, a women\'s fund that directly resources grassroots women- and girl-led organizations responding to violence in emergencies through participatory grantmaking and trust-based, risk-aware approaches. In advisory roles, Kelly supports organizations to deepen technical rigor while remaining accountable to survivors, frontline practitioners, and feminist movements.',
+    ],
+  },
+  {
+    name: 'Kathryne Hemmings',
+    role: 'Senior Counsel, Horn Williamson LLC',
+    initials: 'KH',
+    color: '#d4a000',
+    photo: '/images/headshots/Kathryne.png',
+    photoScale: 1.1,
+    photoPosition: '65% 20%',
+    bio: [
+      'Kathryne Hemmings is a survivor, an advocate, and an attorney committed to ensuring that those who experience sexual violence are met with dignity, belief, and meaningful support. Her connection to this work began long before her legal career. As an undergraduate at Clemson University, she survived a sexual assault that reshaped her life and her understanding of what it means to navigate trauma in environments that often feel unprepared, or unwilling, to help.',
+      'That experience fuels her dedication to ensuring no survivor feels alone in the aftermath of harm. In her legal career, Kathryne has represented students who were assaulted at their universities, supporting them as they faced complex institutional processes and deeply personal challenges.',
+      'Beyond litigation, Kathryne is committed to community education, outreach, and opening pathways to healing, especially for those who feel silenced by stigma or discouraged by systems that have failed them.',
+      'Today, Kathryne serves as Senior Counsel at Horn Williamson, LLC in Philadelphia, where she represents homeowners and community members in complex civil matters.',
+    ],
+  },
+  {
+    name: 'Sophia-Rose Centurioni',
+    role: 'Dancer, Advocate & Survivor',
+    initials: 'SC',
+    color: '#ef3f6b',
+    photo: '/images/headshots/Sophia-Rose.png',
+    photoScale: 1.2,
+    photoPosition: '30% 30%',
+    bio: [
+      'Sophia-Rose is a dancer, advocate, and survivor who uses her story to help others feel safe, seen, and supported. She was sexually assaulted at 16, a trauma that brought fear, shame, and silence. Through therapy, education, and steady healing, she reclaimed her voice and learned that adversity does not define her.',
+      'Today, she speaks openly so no young person feels alone in their recovery. Through her work with R.I.S.E. (Resilience, Inspiration, Support, Empowerment), she teaches teens about safety, boundaries, healthy relationships, and the power of healing.',
+    ],
+  },
+  {
+    name: 'Paulina Pizarro',
+    role: 'Nonprofit Management · 25+ Years',
+    initials: 'PP',
+    color: '#6e98b9',
+    photo: '/images/headshots/Paulina.jpg',
+    photoScale: 1.2,
+    photoPosition: '0% 60%',
+    bio: [
+      'Paulina has over 25 years of experience in nonprofit management, working and volunteering in arts management, education, and equity-based organizations. She has served on various nonprofit boards throughout her career.',
+      'Originally from Chile · B.A. Economics, Texas A&M University',
+    ],
+  },
+  {
+    name: 'Ashley Brooks',
+    role: 'Senior Policy Advisor, TAASA',
+    initials: 'AB',
+    color: '#006b7a',
+    bio: [
+      'Ashley Brooks currently serves as the Senior Policy Advisor for the Texas Association Against Sexual Assault (TAASA). She brings over 20 years of experience in public service to the Summer Willis Foundation Advisory Board.',
+      'Alumna, University of Texas at Austin',
+    ],
+  },
+  {
+    name: 'Gabriella Taylor, M.A.',
+    role: 'Founder, Extraordinary Woman',
+    initials: 'GT',
+    color: '#d4a000',
+    photo: '/images/headshots/Gabriella.jpg',
+    photoScale: 1.1,
+    bio: [
+      'Founder of Extraordinary Woman and pioneer of the Neuroscience of Feminine Power, Gabriella changes women from the inside out, mentoring women of influence and means to discover the authentic, courageous, loving voice within and use it for good.',
+      'Gabriella Taylor, M.A. is the founder of Extraordinary Woman and a pioneer of the Neuroscience of Feminine Power, devoting her life to one essential truth: the most powerful thing a woman can do is become fully herself.',
+      'Trusted by Presidential appointees, Grammy-winning artists, and philanthropic leaders, she draws from her own journey of transformation and nearly thirty years in private practice, bridging neuroscience, psyche, and soul to mentor women of influence and means to discover the authentic, courageous, loving voice within and use it for good.',
+      'Her work guides them toward a new model of what it means to lead, love, and live in the 21st century. Because the world changes when women do. Based in Montecito, CA, she brings both her life\'s work and her personal understanding as a survivor to her role as Executive Producer of A Letter to My Younger Self.',
+    ],
+  },
+  { name: 'Briana Ferringo', role: 'CEO of Matriarch', initials: 'BF', color: '#f37f8e', photo: '/images/headshots/Briana.png', photoScale: 1.3, photoPosition: '50% 30%', bio: ['Briana Ferringo is the CEO of Matriarch, an Impact Marketing Firm specializing in Women\'s Health. She is also the Co-founder of Changemaker Chats, a global women\'s leadership platform that connects and equips emerging female leaders through honest, off-the-record conversations with some of the world\'s most influential women.', 'She is a strategic communications and brand leader passionate about building communities and companies that power positive change. With a background in public health and communications, Briana spent her career translating complex ideas into stories that move people to act.', 'As one of the founding leaders of McCann Global Health, and its former President, she worked with governments, NGOs, and global brands to design campaigns that drove awareness, trust, and behavior change on issues that impact lives around the world. She brings a decade of experience in Public Health and Communications to the SWF Board.'] },
+  { name: 'Emily Carter', role: 'Founding Member of Matriarch', initials: 'EC', color: '#6e98b9', photo: '/images/headshots/Emily.jpeg', photoPosition: '40% 50%', bio: ['Emily Carter is an experienced marketing and business leader with a decade of experience launching and growing health products and companies. She is a founding member of Matriarch.'] },
+  { name: 'Drew Woodley', role: 'Head of Partnerships, Tixr Brands', initials: 'DW', color: '#00909d', photo: '/images/headshots/Drew Woodley.png', photoScale: 1.1, photoPosition: '70% 60%', bio: ['Drew Woodley is a committed advocate who has spent his career bringing unique, impactful and creative experiences to life. During his 18 years in the live events industry, he has helped launch and scale global events and experiences like Electric Run, Tomorrowworld, RiSE Festival, and the #LoveWins campaign, often directly in support of non-profit organizations. He met Summer Willis while she was training to run her first marathon and is proud to be a member of the Summer Willis Foundation Board, helping to raise funding and awareness through brand partnerships and marketing campaigns. Drew currently serves as Head of Partnerships for Tixr Brands and is based in South Lake Tahoe.'] },
+  { name: 'Dini Von Mueffling', role: 'Founder of DVMC', initials: 'DV', color: '#d4a000', photo: '/images/headshots/Dini.png', photoScale: 1.25, photoPosition: '50% 75%', bio: ['Dini founded DVMC in 2015. Her public relations work is taught in universities, has been inducted into the Platinum PR Hall of Fame, and she has been recognized as one of the Top Women in PR by PR News.'] },
+  { name: 'Will Rivera', role: 'Nonprofit Leader & Digital Safety Advocate', initials: 'WR', color: '#ef3f6b', photo: '/images/headshots/Will.png', photoScale: 1.2, photoPosition: '90% 50%', bio: ['Will Rivera began his career as a Victim Specialist at Opportunities for Otsego, a human services agency, before working his way up to Executive Director at the New York State Coalition Against Sexual Assault, where he oversaw 70 statewide programs serving hundreds of thousands of survivors.', 'Will is a Trust & Safety professional dedicated to digital safety who has directly supported thousands of survivors of technology-facilitated violence, sexual violence, domestic violence, and other violent crimes. His experience spans nonprofit management, grant writing, public speaking, and policy advocacy, helping secure millions in state funding and playing a key role in passing legislation to support survivors.', 'Will\'s drive comes from his own story. Growing up in the NYC projects, he faced many of the same challenges he now dedicates his career to addressing.'] },
+  { name: 'Valeria Angyal', role: 'VP of Philanthropy, Alpha Chi Omega', initials: 'VA', color: '#6e98b9', photo: '/images/headshots/Valeria.png', photoScale: 1.1, photoPosition: '60% 65%', bio: ['Valeria Angyal is the VP of Philanthropy for the Alpha Chi Omega Chapter at the University of Texas at Austin. She assists with driving student-level engagement and fostering relationships with panhellenic chapters across US Universities.'] },
+];
 
 ---
 
-<Layout title="About Us" description="Learn about Summer Willis Foundation — our story, mission, and the team dedicated to survivor advocacy and systemic change.">
+<Layout title="About Us" description="Learn about Summer Willis Foundation: our story, mission, and the team dedicated to survivor advocacy and systemic change.">
 
-  <section class="page-header">
-    <img src="/images/icons/SWF - Sun.png" alt="" class="header-sun" aria-hidden="true" />
-    <img src="/images/icons/SWF - Sun.png" alt="" class="sun-bl" aria-hidden="true" />
-    <div class="container">
-      <h1>About Summer Willis Foundation</h1>
-      <p>A survivor-centered organization built on advocacy, community, and lasting change.</p>
-    </div>
-  </section>
+  <PageHeader
+    title="About Summer Willis Foundation"
+    subtitle="A survivor-centered organization built on advocacy, community, and lasting change."
+  />
 
   <!-- Tagline Banner -->
   <section class="tagline-section">
@@ -27,7 +113,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="story-text">
         <h2 class="section-title">Our Story</h2>
         <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
-        <p>Our founder, Summer Willis, is a survivor of sexual violence. In the wake of her assault, she experienced firsthand the systemic failures, silence, and shame that often define the survivor experience. She began running as a bold act of reclamation. This personal challenge grew into <a href="https://www.glamour.co.za/lifestyle/motivation-monday-summer-willis-on-resilience-running-29-marathons-and-turning-pain-into-purpose-ee96ef85-5c85-424e-8968-77d37c3cbf5a" target="_blank" rel="noopener noreferrer" style="color: #00909d;"><strong>'Project 29'</strong></a>— a commitment to run 29 marathons as a testament to her own resilience. She met survivors around the world, each with different lives yet she observed the same pattern. She realized Sexual violence thrives on shame, silence, and laws that haven't kept up with reality. Eventually, Project 29 grew into the Summer Willis Foundation. SWF was established to combat the root causes of sexual violence in innovative and community-driven ways to make a lasting impact.</p>
+        <p>Our founder, Summer Willis, is a survivor of sexual violence. In the wake of her assault, she experienced firsthand the systemic failures, silence, and shame that often define the survivor experience. She began running as a bold act of reclamation. This personal challenge grew into <a href="https://www.glamour.co.za/lifestyle/motivation-monday-summer-willis-on-resilience-running-29-marathons-and-turning-pain-into-purpose-ee96ef85-5c85-424e-8968-77d37c3cbf5a" target="_blank" rel="noopener noreferrer" style="color: #00909d;"><strong>'Project 29'</strong></a>, a commitment to run 29 marathons as a testament to her own resilience. She met survivors around the world, each with different lives yet she observed the same pattern. She realized Sexual violence thrives on shame, silence, and laws that haven't kept up with reality. Eventually, Project 29 grew into the Summer Willis Foundation. SWF was established to combat the root causes of sexual violence in innovative and community-driven ways to make a lasting impact.</p>
       </div>
       <div class="story-image">
         <div class="video-frame">
@@ -54,7 +140,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="section-eyebrow">All About Our Story</div>
         <h2 class="section-title">Running was only the start.</h2>
         <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
-        <p>Summer found her true, renewed strength not just in the miles, but in community, in the power of telling her story without shame , and in a fierce new purpose: creating tangible change so that what happened to her wouldn't happen to others. She realized she had a choice: accept the narrative of 'victim,' or rewrite it. She chose to rewrite it. That single run transformed into a public mission. What started as 'Project 29' became a movement. Summer founded the Summer Willis Foundation to ensure that no survivor ever feels alone and that every survivor has the tools to find their own power—whether on the running path, in their community, or in creating systemic change.</p>
+        <p>Summer found her true, renewed strength not just in the miles, but in community, in the power of telling her story without shame , and in a fierce new purpose: creating tangible change so that what happened to her wouldn't happen to others. She realized she had a choice: accept the narrative of 'victim,' or rewrite it. She chose to rewrite it. That single run transformed into a public mission. What started as 'Project 29' became a movement. Summer founded the Summer Willis Foundation to ensure that no survivor ever feels alone and that every survivor has the tools to find their own power, whether on the running path, in their community, or in creating systemic change.</p>
       </div>
 
       <!-- Right: Card Stack -->
@@ -70,7 +156,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="stack-card card-yellow">
             <div class="stack-icon">💛</div>
             <h3>Believe Survivors</h3>
-            <p>We center survivor voices in everything we do — leading with compassion, trust, and unconditional support.</p>
+            <p>We center survivor voices in everything we do, leading with compassion, trust, and unconditional support.</p>
           </div>
           <div class="stack-card card-pink">
             <div class="stack-icon">🤝</div>
@@ -80,7 +166,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="stack-card card-blue">
             <div class="stack-icon">📣</div>
             <h3>Systemic Change</h3>
-            <p>We don't just respond to harm — we work to dismantle the systems and cultures that allow it to persist.</p>
+            <p>We don't just respond to harm; we work to dismantle the systems and cultures that allow it to persist.</p>
           </div>
         </div>
       </div>
@@ -94,7 +180,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="container">
       <h2 class="section-title">How We Create Change</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
-      <p class="section-subtitle">Three core pillars drive everything we do — from the individual survivor to systems of power.</p>
+      <p class="section-subtitle">Three core pillars drive everything we do, from the individual survivor to systems of power.</p>
       <div class="tenets-grid">
 
         <div class="tenet-card tenet-teal">
@@ -127,7 +213,7 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Featured: Summer Willis -->
       <div class="founder-card founder-card--teal">
-        <div class="founder-avatar founder-avatar--teal">👩</div>
+        <div class="founder-avatar founder-avatar--teal"><img src="/images/headshots/summer-willis.png" alt="Summer Willis" class="founder-avatar-photo" style="object-position: 100% top;" /></div>
         <div class="founder-info">
           <div class="founder-roles">
             <span class="founder-badge">Board President</span>
@@ -140,7 +226,7 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Featured: Katiana Soenen -->
       <div class="founder-card founder-card--yellow">
-        <div class="founder-avatar founder-avatar--yellow">👩</div>
+        <div class="founder-avatar founder-avatar--yellow"><img src="/images/headshots/Katiana.png" alt="Katiana Soenen" class="founder-avatar-photo" style="transform: scale(1.1); transform-origin: center top;" /></div>
         <div class="founder-info">
           <div class="founder-roles">
             <span class="founder-badge">Board Vice President</span>
@@ -149,14 +235,14 @@ import Layout from '../layouts/Layout.astro';
           <h3>Katiana Soenen</h3>
           <p>Katiana is the Board Vice President and Chief Development Officer at the Summer Willis Foundation, where she leads national awareness campaigns, fundraising initiatives, and organizational expansion.</p>
           <p style="margin-top: 0.75rem;">After being sexually assaulted during her first year of college, Katiana found strength in advocacy. Her early activism began with serving as a named plaintiff in a <strong>Title IX compliance case</strong>, pressing for stronger campus-safety systems and institutional accountability. Before joining SWF, she focused on grassroots efforts to expand resources for college survivors as well as reproductive rights advocacy in Texas and Tennessee.</p>
-          <p style="margin-top: 0.75rem;">Alongside founder Summer Willis, Katiana now drives SWF's development pipeline, donor partnerships, multi-state growth, and high-impact national campaigns — including the forthcoming Denim Runs series, a national resource map for survivors, and the "Letter to My Younger Self" film. She is dedicated to building innovative and sustainable infrastructure, amplifying survivor voices, and advancing meaningful policy change.</p>
-          <p style="margin-top: 0.75rem; color: #6b7280; font-size: 0.9rem;">Born and raised in Texas · B.A. Political Science & Public Health, Vanderbilt University · Certified Yoga Instructor</p>
+          <p style="margin-top: 0.75rem;">Alongside founder Summer Willis, Katiana now drives SWF's development pipeline, donor partnerships, multi-state growth, and high-impact national campaigns, including the forthcoming Denim Runs series, a national resource map for survivors, and the <a href="https://donorbox.org/a-letter-to-my-younger-self" target="_blank" rel="noopener">"Letter to My Younger Self" film</a>. She is dedicated to building innovative and sustainable infrastructure, amplifying survivor voices, and advancing meaningful policy change.</p>
+          <p style="margin-top: 0.75rem; color: var(--c-text-secondary); font-size: 0.9rem;">Born and raised in Texas · B.A. Political Science & Public Health, Vanderbilt University · Certified Yoga Instructor</p>
         </div>
       </div>
 
       <!-- Featured: Samantha McCoy -->
       <div class="founder-card founder-card--pink">
-        <div class="founder-avatar founder-avatar--pink">👩</div>
+        <div class="founder-avatar founder-avatar--pink"><img src="/images/headshots/Samantha.png" alt="Samantha McCoy" class="founder-avatar-photo" style="transform: scale(1.4); transform-origin: center top; object-position: center 55%;" /></div>
         <div class="founder-info">
           <div class="founder-roles">
             <span class="founder-badge">Board Secretary</span>
@@ -164,8 +250,8 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <h3>Samantha McCoy</h3>
           <p>Samantha McCoy is an award-winning appellate attorney, public speaker, activist, and licensed master social worker. Following a sexually violent crime, Samantha dedicated her career to ensuring all gaps within the judicial system are finally closed and all survivors of sexual violence are treated in a dignified and trauma-informed manner.</p>
-          <p style="margin-top: 0.75rem;">Samantha has successfully lobbied for several laws in five states, the <strong>federal TAKE IT DOWN Act</strong>, and a <strong>United Nations Resolution</strong> — all of which strengthened the rights and protections for survivors.</p>
-          <p style="margin-top: 0.75rem; color: #6b7280; font-size: 0.9rem;">M.S.W. & Certificate of Advanced Study in Trauma-Informed Practice, Syracuse University · J.D. <em>summa cum laude</em>, St. Mary's University School of Law</p>
+          <p style="margin-top: 0.75rem;">Samantha has successfully lobbied for several laws in five states, the <strong>federal TAKE IT DOWN Act</strong>, and a <strong>United Nations Resolution</strong>, all of which strengthened the rights and protections for survivors.</p>
+          <p style="margin-top: 0.75rem; color: var(--c-text-secondary); font-size: 0.9rem;">M.S.W. & Certificate of Advanced Study in Trauma-Informed Practice, Syracuse University · J.D. <em>summa cum laude</em>, St. Mary's University School of Law</p>
         </div>
       </div>
 
@@ -180,186 +266,44 @@ import Layout from '../layouts/Layout.astro';
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
       <p class="section-subtitle">Experts, survivors, and advocates who guide our work with wisdom, lived experience, and specialized expertise.</p>
 
-      <div class="advisory-grid">
+      <div class="advisory-grid grid-3">
+        {advisors.map((a, i) => (
+          <button class={`advisory-card card-${HEX_TO_CLASS[a.color] ?? 'teal'}`} data-index={i} aria-label={`Learn more about ${a.name}`}>
+            <div class={`advisory-avatar av-${HEX_TO_CLASS[a.color] ?? 'teal'}`}>{a.photo ? <img src={a.photo} alt={a.name} class="advisory-avatar-photo" style={[a.photoPosition ? `object-position: ${a.photoPosition}` : '', a.photoScale ? `transform: scale(${a.photoScale}); transform-origin: ${a.photoPosition ?? '50% 50%'}` : ''].filter(Boolean).join('; ') || undefined} /> : a.initials}</div>
+            <h3>{a.name}</h3>
+            <span class="advisory-role">{a.role}</span>
+            {a.bio.length > 0 && <span class="advisory-more">Learn more →</span>}
+          </button>
+        ))}
+      </div>
 
-        <div class="advisory-card advisory-card--teal">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--teal">👩</div>
+      <!-- Modal -->
+      <div class="adv-modal-backdrop" id="adv-modal" aria-modal="true" role="dialog" hidden>
+        <div class="adv-modal-box">
+          <button class="adv-modal-close" id="adv-modal-close" aria-label="Close">✕</button>
+          <div class="adv-modal-header">
+            <div class="adv-modal-avatar" id="adv-modal-avatar"></div>
             <div>
-              <h3>Kelly Joseph</h3>
-              <span class="advisory-label advisory-label--teal">Founder, La Sœur Fund</span>
+              <h3 id="adv-modal-name"></h3>
+              <span id="adv-modal-role"></span>
             </div>
           </div>
-          <div class="advisory-bio">
-            <p>Kelly Shawn Joseph is a specialist in preventing and responding to violence against women and girls across humanitarian, development, and crisis-affected contexts — including Afghanistan, Bangladesh, Central African Republic, Iraq, Lebanon, Mali, Somalia, and Ukraine. Her work focuses on strengthening survivor-centered prevention and response systems in complex and politically constrained environments.</p>
-            <p>She is the Founder of <strong>La Sœur Fund</strong>, a women's fund that directly resources grassroots women- and girl-led organizations responding to violence in emergencies through participatory grantmaking and trust-based, risk-aware approaches. In advisory roles, Kelly supports organizations to deepen technical rigor while remaining accountable to survivors, frontline practitioners, and feminist movements.</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
+          <div class="adv-modal-bio" id="adv-modal-bio"></div>
         </div>
-
-        <div class="advisory-card advisory-card--yellow">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--yellow">👩</div>
-            <div>
-              <h3>Kathryne Hemmings</h3>
-              <span class="advisory-label advisory-label--yellow">Senior Counsel, Horn Williamson LLC</span>
-            </div>
-          </div>
-          <div class="advisory-bio">
-            <p>Kathryne Hemmings is a survivor, an advocate, and an attorney committed to ensuring that those who experience sexual violence are met with dignity, belief, and meaningful support. Her connection to this work began long before her legal career. As an undergraduate at Clemson University, she survived a sexual assault that reshaped her life and her understanding of what it means to navigate trauma in environments that often feel unprepared—or unwilling—to help.</p>
-            <p>That experience fuels her dedication to ensuring no survivor feels alone in the aftermath of harm. In her legal career, Kathryne has represented students who were assaulted at their universities, supporting them as they faced complex institutional processes and deeply personal challenges. Her work has always centered on listening closely, validating lived experiences, and advocating in ways that honor each survivor's agency and story.</p>
-            <p>Beyond litigation, Kathryne is committed to community education, outreach, and opening pathways to healing—especially for those who feel silenced by stigma or discouraged by systems that have failed them. She believes strongly in strengthening survivor-support networks, expanding access to trauma-informed resources, and fostering environments where healing is not only possible but supported at every step.</p>
-            <p>Kathryne joined the advisory board of Strength Through Strides because the organization's mission aligns with the heart of her life's work: creating compassionate, survivor-centered spaces where people can find support, connection, and empowerment. She is honored to help further the organization's vision and to stand alongside survivors as they reclaim their strength and their stories.</p>
-            <p>Today, Kathryne serves as Senior Counsel at Horn Williamson, LLC in Philadelphia, where she represents homeowners and community members in complex civil matters. In her day-to-day work, she continues to prioritize clear communication, trust-building, and advocacy that centers the human beings behind every case—values that also guide her commitment to supporting survivors through Strength Through Strides.</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
-        </div>
-
-        <div class="advisory-card advisory-card--pink">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--pink">👩</div>
-            <div>
-              <h3>Sophia-Rose Centurioni</h3>
-              <span class="advisory-label advisory-label--pink">Dancer, Advocate & Survivor</span>
-            </div>
-          </div>
-          <div class="advisory-bio">
-            <p>Sophia-Rose is a dancer, advocate, and survivor who uses her story to help others feel safe, seen, and supported. She was sexually assaulted at 16 — a trauma that brought fear, shame, and silence. Through therapy, education, and steady healing, she reclaimed her voice and learned that adversity does not define her.</p>
-            <p>Today, she speaks openly so no young person feels alone in their recovery. Through her work with <strong>R.I.S.E.</strong> (Resilience, Inspiration, Support, Empowerment), she teaches teens about safety, boundaries, healthy relationships, and the power of healing. Her mission: help survivors stand stronger and help every young person know their worth.</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
-        </div>
-
-        <div class="advisory-card advisory-card--teal">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--teal">👩</div>
-            <div>
-              <h3>Paulina Pizarro</h3>
-              <span class="advisory-label advisory-label--teal">Nonprofit Management · 25+ Years</span>
-            </div>
-          </div>
-          <div class="advisory-bio">
-            <p>Paulina has over 25 years of experience in nonprofit management, working and volunteering in arts management, education, and equity-based organizations. She has served on various nonprofit boards throughout her career.</p>
-            <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.75rem;">Originally from Chile · B.A. Economics, Texas A&M University</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
-        </div>
-
-        <div class="advisory-card advisory-card--yellow">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--yellow">👩</div>
-            <div>
-              <h3>Ashley Brooks</h3>
-              <span class="advisory-label advisory-label--yellow">Senior Policy Advisor, TAASA</span>
-            </div>
-          </div>
-          <div class="advisory-bio">
-            <p>Ashley Brooks currently serves as the Senior Policy Advisor for the Texas Association Against Sexual Assault (TAASA). She brings over 20 years of experience in public service to the Summer Willis Foundation Advisory Board.</p>
-            <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.75rem;">Alumna, University of Texas at Austin</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👩</div>
-          <h3>Briana Ferrigno</h3>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👩</div>
-          <h3>Emily Carter</h3>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👨</div>
-          <h3>Drew Woodley</h3>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👩</div>
-          <h3>Dini Von Mueffling</h3>
-        </div>
-
-        <div class="advisory-card advisory-card--pink">
-          <div class="advisory-header">
-            <div class="advisory-avatar advisory-avatar--pink">👩</div>
-            <div>
-              <h3>Gabriella Taylor, M.A.</h3>
-              <span class="advisory-label advisory-label--pink">Founder, Extraordinary Woman</span>
-            </div>
-          </div>
-          <div class="advisory-bio">
-            <p>Founder of Extraordinary Woman and pioneer of the Neuroscience of Feminine Power, Gabriella changes women from the inside out — mentoring women of influence and means to discover the authentic, courageous, loving voice within and use it for good.</p>
-            <p>Gabriella Taylor, M.A. is the founder of Extraordinary Woman and a pioneer of the Neuroscience of Feminine Power — devoting her life to one essential truth: the most powerful thing a woman can do is become fully herself.</p>
-            <p>Trusted by Presidential appointees, Grammy-winning artists, and philanthropic leaders, she draws from her own journey of transformation and nearly thirty years in private practice — bridging neuroscience, psyche, and soul to mentor women of influence and means to discover the authentic, courageous, loving voice within and use it for good.</p>
-            <p>Her work guides them toward a new model of what it means to lead, love, and live in the 21st century. Because the world changes when women do. Based in Montecito, CA, she brings both her life's work and her personal understanding as a survivor to her role as Executive Producer of A Letter to My Younger Self.</p>
-          </div>
-          <button class="advisory-read-more">Read more</button>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👨</div>
-          <h3>Will Rivera</h3>
-        </div>
-
-        <div class="advisory-card advisory-card--compact">
-          <div class="advisory-avatar">👩</div>
-          <h3>Valeria Angyal</h3>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section cta-strip">
-    <div class="container cta-inner">
-      <div>
-        <h2>Stand with survivors.</h2>
-        <p>Advocates, allies, and donors make our work possible.</p>
-      </div>
-      <a href="/get-involved" class="btn btn-primary">Get Involved</a>
-    </div>
-  </section>
+  <CTABanner
+    heading="Stand with survivors."
+    body="Advocates, allies, and donors make our work possible."
+    buttonText="Get Involved"
+    buttonHref="/get-involved"
+  />
 
 </Layout>
 
 <style>
-  .section-underline {
-    height: 28px;
-    width: auto;
-    display: block;
-    margin: 0.4rem 0 1.25rem;
-    opacity: 0.85;
-  }
-
-  .page-header {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
-    color: white;
-    padding: 4rem 0;
-    text-align: center;
-  }
-
-  .header-sun {
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 220px;
-    height: auto;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-
-  .page-header h1 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    margin: 0 0 0.75rem;
-  }
-
-  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
-
   .tagline-section {
     background: var(--c-bg-yellow);
     border-bottom: 2px solid var(--c-yellow);
@@ -459,10 +403,10 @@ import Layout from '../layouts/Layout.astro';
 
   .stack-icon { font-size: 2rem; }
 
-  .card-teal   { background: var(--c-bg-teal);   border: 2px solid rgba(0,144,157,0.25); }
-  .card-yellow { background: var(--c-bg-yellow);  border: 2px solid rgba(255,198,11,0.35); }
-  .card-pink   { background: var(--c-bg-pink);    border: 2px solid rgba(239,63,107,0.25); }
-  .card-blue   { background: var(--c-bg-blue);    border: 2px solid rgba(110,152,185,0.25); }
+  .stack-card.card-teal   { background: var(--c-bg-teal);   border: 2px solid rgba(0,144,157,0.25);   border-top: 2px solid rgba(0,144,157,0.25); }
+  .stack-card.card-yellow { background: var(--c-bg-yellow);  border: 2px solid rgba(255,198,11,0.35);  border-top: 2px solid rgba(255,198,11,0.35); }
+  .stack-card.card-pink   { background: var(--c-bg-pink);    border: 2px solid rgba(239,63,107,0.25);  border-top: 2px solid rgba(239,63,107,0.25); }
+  .stack-card.card-blue   { background: var(--c-bg-blue);    border: 2px solid rgba(110,152,185,0.25); border-top: 2px solid rgba(110,152,185,0.25); }
 
   .story-grid {
     display: grid;
@@ -567,16 +511,19 @@ import Layout from '../layouts/Layout.astro';
 
   .founder-avatar {
     font-size: 3.5rem;
-    width: 88px;
-    height: 88px;
+    width: 110px;
+    height: 110px;
     background: white;
     border-radius: 50%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     border: 2px solid var(--c-blue-light);
   }
+
+  .founder-avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
 
   .founder-avatar--yellow { border-color: var(--c-yellow-light); }
   .founder-avatar--pink { border-color: var(--c-pink); }
@@ -623,154 +570,187 @@ import Layout from '../layouts/Layout.astro';
     margin: 0;
   }
 
-  .decor-icon {
-    position: absolute;
-    width: 180px;
-    height: auto;
-    opacity: 0.18;
-    pointer-events: none;
-  }
-  .decor-br { bottom: 16px; right: 16px; }
-  .decor-tr { top: 16px; right: 16px; }
-  .decor-tl { top: 16px; left: 16px; }
-  .decor-bl { bottom: 16px; left: 16px; }
-
   .tenets-section { position: relative; overflow: hidden; }
   .advisory-section { position: relative; overflow: hidden; background: #f9fafb; }
 
   .advisory-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1.25rem;
     margin-top: 0.5rem;
-    align-items: start;
   }
 
   .advisory-card {
     background: white;
     border: 1px solid #e5e7eb;
-    border-top: 3px solid var(--c-blue);
-    border-radius: 12px;
-    padding: 1.75rem;
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
-  }
-
-  .advisory-card--teal { border-top-color: var(--c-primary); }
-  .advisory-card--yellow { border-top-color: var(--c-yellow); }
-  .advisory-card--pink { border-top-color: var(--c-pink-dark); }
-
-  .advisory-header {
-    display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    text-align: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s;
+    font-family: inherit;
+    width: 100%;
   }
+
+  .card-teal        { border-top: 3px solid var(--c-primary);      background: var(--c-bg-teal); }
+  .card-yellow      { border-top: 3px solid var(--c-yellow);       background: var(--c-bg-yellow); }
+  .card-pink        { border-top: 3px solid var(--c-pink-dark);    background: var(--c-bg-pink); }
+  .card-blue        { border-top: 3px solid var(--c-blue);         background: var(--c-bg-blue); }
+  .card-teal-dark   { border-top: 3px solid var(--c-primary-dark); background: var(--c-bg-teal); }
+  .card-blue-light  { border-top: 3px solid var(--c-blue-light);   background: var(--c-bg-blue); }
+  .card-yellow-light{ border-top: 3px solid var(--c-yellow-light); background: var(--c-bg-yellow); }
+  .card-pink-light  { border-top: 3px solid var(--c-pink);         background: var(--c-bg-pink); }
+
+  .advisory-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+  }
+
+  .advisory-card:focus { outline: none; }
+  .advisory-card:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 2px; }
 
   .advisory-avatar {
-    font-size: 2rem;
-    width: 56px;
-    height: 56px;
-    background: var(--c-bg-blue);
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
     flex-shrink: 0;
-    border: 1px solid var(--c-blue-light);
+    margin-bottom: 0.25rem;
   }
 
-  .advisory-avatar--teal { background: var(--c-bg-teal); border-color: var(--c-primary); }
-  .advisory-avatar--yellow { background: var(--c-bg-yellow); border-color: var(--c-yellow); }
-  .advisory-avatar--pink { background: var(--c-bg-pink); border-color: var(--c-pink); }
+  .advisory-avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: 30% top; transform: scale(1.6); transform-origin: 30% top; display: block; }
 
-  .advisory-header h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin: 0 0 0.2rem;
-  }
+  .av-teal        { background: var(--c-primary); }
+  .av-yellow      { background: #d4a000; }
+  .av-pink        { background: var(--c-pink-dark); }
+  .av-blue        { background: var(--c-blue); }
+  .av-teal-dark   { background: var(--c-primary-dark); }
+  .av-blue-light  { background: var(--c-blue); }
+  .av-yellow-light{ background: #d4a000; }
+  .av-pink-light  { background: var(--c-pink); }
 
-  .advisory-label {
-    font-size: 0.8rem;
-    color: var(--c-blue);
-    font-weight: 600;
-  }
-
-  .advisory-label--teal { color: var(--c-primary); }
-  .advisory-label--yellow { color: var(--c-primary-dark); }
-  .advisory-label--pink { color: var(--c-pink-dark); }
-
-  .advisory-bio {
-    max-height: 130px;
-    overflow: hidden;
-    position: relative;
-    transition: max-height 0.35s ease;
-    flex: 1;
-  }
-
-  .advisory-bio::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, white);
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-
-  .advisory-bio.expanded {
-    max-height: var(--bio-height, 9999px);
-  }
-
-  .advisory-bio.expanded::after {
-    opacity: 0;
-  }
-
-  .advisory-card p {
-    font-size: 0.9rem;
-    color: #4b5563;
-    line-height: 1.7;
-    margin: 0 0 0.75rem;
-  }
-
-  .advisory-card p:last-child { margin-bottom: 0; }
-
-  .advisory-read-more {
-    margin-top: 0.75rem;
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--c-primary);
-    cursor: pointer;
-    font-family: inherit;
-    text-align: left;
-    display: none;
-  }
-
-  .advisory-read-more:hover { text-decoration: underline; }
-
-  .advisory-card--compact {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.25rem 1.5rem;
-  }
-
-  .advisory-card--compact h3 {
+  .advisory-card h3 {
     font-size: 1rem;
     font-weight: 700;
     margin: 0;
+    color: #111827;
   }
 
-  .advisory-card--compact .advisory-avatar {
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
+  .advisory-role {
+    font-size: 0.8rem;
+    color: var(--c-text-secondary);
+    line-height: 1.4;
+  }
+
+  .advisory-more {
+    font-size: 0.8rem;
+    color: var(--c-primary);
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  /* Modal */
+  .adv-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .adv-modal-backdrop[hidden] { display: none; }
+
+  .adv-modal-box {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 560px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .adv-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+  }
+
+  .adv-modal-close:hover { background: #e5e7eb; }
+
+  .adv-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .adv-modal-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
     flex-shrink: 0;
+  }
+
+  .adv-modal-avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; transform: scale(1); transform-origin: 50% 50%; display: block; }
+
+  .adv-modal-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+    color: #111827;
+  }
+
+  .adv-modal-header span {
+    font-size: 0.85rem;
+    color: var(--c-text-secondary);
+  }
+
+  .adv-modal-bio p {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.75;
+    margin: 0 0 0.85rem;
+  }
+
+  .adv-modal-bio p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 843px) {
+    .advisory-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .advisory-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   .team-grid {
@@ -807,78 +787,81 @@ import Layout from '../layouts/Layout.astro';
 
   .team-card p {
     font-size: 0.85rem;
-    color: #6b7280;
+    color: var(--c-text-secondary);
     margin: 0;
   }
-
-  .cta-strip {
-    background: var(--c-bg-yellow);
-    border-top: 2px solid var(--c-yellow);
-    padding: 3rem 0;
-  }
-
-  .cta-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .cta-inner h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 0.25rem;
-  }
-
-  .cta-inner p { color: #6b7280; margin: 0; }
 
   @media (max-width: 768px) {
     .story-grid { grid-template-columns: 1fr; gap: 2rem; }
     .story-values-grid { grid-template-columns: 1fr; gap: 2rem; }
     .tenets-grid { grid-template-columns: 1fr; }
     .founder-card { flex-direction: column; gap: 1.25rem; }
-    .advisory-grid { grid-template-columns: 1fr; }
+    .advisory-grid { grid-template-columns: repeat(2, 1fr); }
     .team-grid { grid-template-columns: repeat(2, 1fr); }
-    .cta-inner { flex-direction: column; text-align: center; }
+    .card-stack { height: 340px; }
+    .stack-card p { font-size: 0.875rem; }
+    .adv-modal-backdrop { align-items: flex-start; padding: 124px 1rem 1rem; }
+    .adv-modal-box { max-height: calc(100vh - 132px); }
   }
 
   @media (max-width: 480px) {
     .values-grid { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .advisory-grid { grid-template-columns: 1fr; }
   }
 </style>
 
-<script>
+<script define:vars={{ advisors }} is:inline>
   // Rewind video to start when it ends (without autoplaying)
-  const video = document.getElementById('story-video') as HTMLVideoElement;
+  const video = document.getElementById('story-video');
   video?.addEventListener('ended', () => { video.currentTime = 0; });
 
-  document.querySelectorAll('.advisory-read-more').forEach(btn => {
-    const bio = btn.previousElementSibling;
-    if (!bio || !bio.classList.contains('advisory-bio')) return;
+  const modal = document.getElementById('adv-modal');
+  const modalAvatar = document.getElementById('adv-modal-avatar');
+  const modalName = document.getElementById('adv-modal-name');
+  const modalRole = document.getElementById('adv-modal-role');
+  const modalBio = document.getElementById('adv-modal-bio');
+  const modalClose = document.getElementById('adv-modal-close');
 
-    const button = btn as HTMLElement;
-    const bioEl = bio as HTMLElement;
-
-    // Show button only if content overflows the capped height
-    if (bioEl.scrollHeight > bioEl.clientHeight + 2) {
-      button.style.display = 'block';
+  function openModal(index) {
+    const a = advisors[index];
+    if (!a || a.bio.length === 0) return;
+    if (a.photo) {
+      const scale = a.photoScale ?? 1.6;
+      const pos = a.photoPosition ?? '30% top';
+      modalAvatar.innerHTML = `<img src="${a.photo}" alt="${a.name}" class="adv-modal-avatar-photo" style="transform: scale(${scale}); transform-origin: ${pos}; object-position: ${pos};" />`;
+      modalAvatar.style.background = 'transparent';
+    } else {
+      modalAvatar.textContent = a.initials;
+      modalAvatar.style.background = a.color;
     }
+    modalName.textContent = a.name;
+    modalRole.textContent = a.role;
+    modalBio.innerHTML = a.bio.map(p => `<p>${p}</p>`).join('');
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+  }
 
-    button.addEventListener('click', () => {
-      const expanded = bioEl.classList.toggle('expanded');
-      if (expanded) {
-        bioEl.style.setProperty('--bio-height', bioEl.scrollHeight + 'px');
-      }
-      button.textContent = expanded ? 'Show less' : 'Read more';
+  function closeModal() {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.advisory-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const index = parseInt(card.dataset.index || '0');
+      openModal(index);
     });
   });
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
   // Card stack
   const stack = document.getElementById('values-stack');
   if (stack) {
-    const cards = Array.from(stack.querySelectorAll<HTMLElement>('.stack-card'));
+    const cards = Array.from(stack.querySelectorAll('.stack-card'));
     let order = cards.map((_, i) => i);
     let animating = false;
 
@@ -890,7 +873,7 @@ import Layout from '../layouts/Layout.astro';
       { z: 1, rotate: '5deg',  tx: '14px',  ty: '18px' },
     ];
 
-    function place(card: HTMLElement, pos: number, animate: boolean, delay = 0) {
+    function place(card, pos, animate, delay = 0) {
       const p = positions[Math.min(pos, positions.length - 1)];
       card.style.transition = animate
         ? `transform 500ms cubic-bezier(0.34, 1.2, 0.64, 1) ${delay}ms, box-shadow 500ms ease ${delay}ms`
@@ -945,7 +928,7 @@ import Layout from '../layouts/Layout.astro';
     stack.addEventListener('click', next);
 
     // Cursor tilt on top card only
-    stack.addEventListener('mousemove', (e: MouseEvent) => {
+    stack.addEventListener('mousemove', (e) => {
       if (animating) return;
       const topCard = cards[order[0]];
       const rect = stack.getBoundingClientRect();

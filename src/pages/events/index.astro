@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+const events = [
+  {
+    slug: 'denim-run-april-2026',
+    title: 'The Denim Run Los Angeles',
+    date: 'April 12, 2026',
+    location: 'Los Angeles, CA',
+    tag: 'The Denim Runs',
+    cover: '/images/Denim Run April 2026/0001_elizabethmessina_DENIM_RUNS.jpg',
+    photoCount: 15,
+    excerpt: 'Our first-ever Denim Run brought together survivors, advocates, and community members in Los Angeles for a powerful morning of movement and solidarity.',
+    accent: 'var(--c-primary)',
+    bg: 'var(--c-bg-teal)',
+  },
+]
+---
+
+<Layout title="Events" description="Photos and recaps from Summer Willis Foundation events, including The Denim Runs and community gatherings.">
+
+  <PageHeader
+    title="Events"
+    subtitle="Moments from our community: runs, rallies, and gatherings that turn pain into purpose."
+  />
+
+  <section class="section events-index">
+    <div class="container">
+      <div class="events-grid">
+        {events.map(event => (
+          <a href={`/events/${event.slug}`} class="event-card">
+            <div class="event-card-cover">
+              <img
+                src={event.cover}
+                alt={`${event.title} cover photo`}
+                loading="eager"
+                decoding="async"
+                class="cover-img"
+              />
+              <span class="event-card-tag" style={`background: ${event.accent};`}>{event.tag}</span>
+              <span class="event-card-count">📷 {event.photoCount} photos</span>
+            </div>
+            <div class="event-card-body">
+              <h2>{event.title}</h2>
+              <div class="event-card-meta">
+                <span>📅 {event.date}</span>
+                <span>📍 {event.location}</span>
+              </div>
+              <p>{event.excerpt}</p>
+              <span class="event-card-cta">View Gallery →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .events-index {
+    background: var(--c-bg-teal);
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+
+  .event-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .event-card-cover {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #e5e7eb;
+  }
+
+  .cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+
+  .event-card:hover .cover-img { transform: scale(1.04); }
+
+  .event-card-tag {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+  }
+
+  .event-card-count {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .event-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .event-card-body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+    color: #111827;
+  }
+
+  .event-card-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.82rem;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .event-card-body p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.65;
+    margin: 0 0 1rem;
+    flex: 1;
+  }
+
+  .event-card-cta {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--c-primary);
+  }
+
+  @media (max-width: 640px) {
+    .events-grid { grid-template-columns: 1fr; }
+  }
+</style>

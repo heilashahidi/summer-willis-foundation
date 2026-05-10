@@ -1,0 +1,73 @@
+---
+import ResourceMap from '../components/ResourceMap';
+import QuickExit from '../components/QuickExit.astro';
+import '../styles/tailwind.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Resource Map | Summer Willis Foundation</title>
+  <link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32" />
+  <meta name="robots" content="noindex" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    .map-shell {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+    }
+
+    .map-shell astro-island,
+    .map-shell astro-island > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .btn-row {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-btn {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+      text-decoration: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.15s;
+    }
+
+    .back-btn:hover { background: #f9fafb; }
+
+  </style>
+</head>
+<body>
+  <div class="map-shell">
+    <ResourceMap client:load />
+  </div>
+
+  <div class="btn-row">
+    <QuickExit position="inline" />
+    <a href="/resource-map" class="back-btn">← Back to site</a>
+  </div>
+</body>
+</html>

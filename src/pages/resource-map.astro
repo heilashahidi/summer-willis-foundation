@@ -1,16 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CTABanner from '../components/CTABanner.astro';
 import ResourceMap from '../components/ResourceMap';
 import '../styles/tailwind.css';
 
 const serviceTypes = [
   {
-    icon: '⚖️',
+    icon: '/images/icons/scale.png',
     name: 'Pro Bono Legal',
     color: 'var(--c-primary)',
     bg: 'var(--c-bg-teal)',
     border: 'var(--c-primary)',
-    description: 'Free or reduced-cost legal representation and advice for survivors navigating the justice system. Pro bono attorneys can help with protective orders, Title IX complaints, civil suits, and more — ensuring every survivor has access to legal support regardless of financial situation.',
+    description: 'Free or reduced-cost legal representation and advice for survivors navigating the justice system. Pro bono attorneys can help with protective orders, Title IX complaints, civil suits, and more, ensuring every survivor has access to legal support regardless of financial situation.',
   },
   {
     icon: '🏥',
@@ -18,7 +20,7 @@ const serviceTypes = [
     color: 'var(--c-primary-dark)',
     bg: 'var(--c-bg-teal)',
     border: 'var(--c-primary-dark)',
-    description: 'Sexual Assault Nurse Examiner (SANE) programs provide specialized, trauma-informed medical care after an assault. SANE nurses are trained to conduct forensic exams, preserve evidence, treat injuries, and connect survivors with follow-up support — all in a confidential, compassionate setting.',
+    description: 'Sexual Assault Nurse Examiner (SANE) programs provide specialized, trauma-informed medical care after an assault. SANE nurses are trained to conduct forensic exams, preserve evidence, treat injuries, and connect survivors with follow-up support, all in a confidential, compassionate setting.',
   },
   {
     icon: '💜',
@@ -50,25 +52,28 @@ const serviceTypes = [
     color: 'var(--c-pink)',
     bg: 'var(--c-bg-pink)',
     border: 'var(--c-pink)',
-    description: 'Confidential, 24/7 crisis support lines staffed by trained advocates. Whether you need to talk, need help making a safety plan, or just aren\'t sure what to do next — hotline advocates are here to listen without judgment and connect you with local resources.',
+    description: 'Confidential, 24/7 crisis support lines staffed by trained advocates. Whether you need to talk, need help making a safety plan, or just aren\'t sure what to do next, hotline advocates are here to listen without judgment and connect you with local resources.',
   },
 ];
 ---
 
-<Layout title="Resource Map" description="Find survivor support resources near you — the Summer Willis Foundation Resource Map.">
+<Layout title="Resource Map" description="Find survivor support resources near you. The Summer Willis Foundation Resource Map.">
 
-  <section class="page-header">
-    <img src="/images/icons/SWF - Sun.png" alt="" class="header-sun" aria-hidden="true" />
-    <div class="container">
-      <h1>Resource Map</h1>
-      <p>Find vetted survivor support services near you — searchable by location and type.</p>
-    </div>
-  </section>
+  <PageHeader
+    title="Resource Map"
+    subtitle="Find vetted survivor support services near you, searchable by location and type."
+  />
 
   <section class="map-section">
     <div class="container">
+      <div class="map-top-bar">
+        <a href="/map" class="fullscreen-btn" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Open Full Map
+        </a>
+      </div>
       <div class="map-wrapper">
-        <ResourceMap client:only="react" />
+        <ResourceMap client:visible />
       </div>
     </div>
   </section>
@@ -80,10 +85,10 @@ const serviceTypes = [
       <h2 class="section-title">Understanding the Services</h2>
       <img src="/images/icons/SWF - Underline.png" alt="" class="section-underline" aria-hidden="true" />
       <p class="section-subtitle">Not sure what type of support you're looking for? Here's a breakdown of each service category on the map.</p>
-      <div class="services-grid">
+      <div class="services-grid grid-3">
         {serviceTypes.map(service => (
           <div class="service-card" style={`background: ${service.bg}; border-top-color: ${service.border};`}>
-            <div class="service-icon">{service.icon}</div>
+            <div class="service-icon">{service.icon.startsWith('/') ? <img src={service.icon} alt="" class="service-icon-img" /> : service.icon}</div>
             <h3 style={`color: ${service.color};`}>{service.name}</h3>
             <p>{service.description}</p>
           </div>
@@ -92,81 +97,70 @@ const serviceTypes = [
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-strip section">
-    <div class="container cta-inner">
-      <div>
-        <h2>Not sure where to start?</h2>
-        <p>Reach out to us directly — we can help connect you with the right resources.</p>
-      </div>
-      <a href="/contact" class="btn btn-primary">Contact Us</a>
-    </div>
-  </section>
+  <CTABanner
+    heading="Not sure where to start?"
+    body="Reach out to us directly, and we can help connect you with the right resources."
+    buttonText="Contact Us"
+    buttonHref="/get-involved#contact"
+  />
 
 </Layout>
 
 <style>
-  .page-header {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
-    color: white;
-    padding: 4rem 0;
-    text-align: center;
-  }
-
-  .header-sun {
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 220px;
-    height: auto;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-
-  .page-header h1 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    margin: 0 0 0.75rem;
-  }
-
-  .page-header p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    margin: 0;
-  }
-
   .map-section {
     padding: 3rem 0 2rem;
   }
 
+  .map-section .container {
+    max-width: 1452px;
+  }
+
+  .map-top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
+  .fullscreen-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+    text-decoration: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .fullscreen-btn:hover {
+    background: var(--c-bg-teal);
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+  }
+
   .map-wrapper {
-    height: 740px;
-    border-radius: 16px;
+    height: 946px;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
     border: 1px solid var(--c-blue-light);
     display: flex;
     flex-direction: column;
   }
 
-  .section-underline {
-    height: 28px;
-    width: auto;
-    display: block;
-    margin: 0.4rem 0 1.25rem;
-    opacity: 0.85;
+  /* Fix Astro hydration wrapper breaking the h-full chain */
+  .map-wrapper astro-island,
+  .map-wrapper astro-island > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
-
-  .decor-icon {
-    position: absolute;
-    width: 160px;
-    height: auto;
-    opacity: 0.18;
-    pointer-events: none;
-  }
-  .decor-tl { top: 16px; left: 16px; }
 
   /* Services */
   .services-section {
@@ -176,8 +170,6 @@ const serviceTypes = [
   }
 
   .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
@@ -197,6 +189,8 @@ const serviceTypes = [
     margin-bottom: 0.75rem;
   }
 
+  .service-icon-img { width: 2rem; height: 2rem; object-fit: contain; display: block; }
+
   .service-card h3 {
     font-size: 1.05rem;
     font-weight: 700;
@@ -210,35 +204,24 @@ const serviceTypes = [
     margin: 0;
   }
 
-  /* CTA */
-  .cta-strip {
-    background: var(--c-bg-yellow);
-    border-top: 2px solid var(--c-yellow);
+  @media (max-width: 1024px) {
+    .map-wrapper { height: min(700px, 78vh); }
   }
 
-  .cta-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .cta-inner h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 0.25rem;
-  }
-
-  .cta-inner p {
-    color: #6b7280;
-    margin: 0;
+  @media (max-width: 843px) {
+    .map-wrapper { height: min(680px, 80vh); }
+    .map-section { padding: 1.5rem 0 1.5rem; }
   }
 
   @media (max-width: 768px) {
-    .map-wrapper { height: 500px; }
+    .map-wrapper { height: min(680px, 80vh); }
     .services-grid { grid-template-columns: 1fr; }
-    .cta-inner { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .map-wrapper { height: min(600px, 82vh); }
+    .map-section { padding: 1rem 0 1rem; }
+    .map-section .container { padding: 0 0.75rem; }
   }
 
   @media (min-width: 640px) and (max-width: 900px) {

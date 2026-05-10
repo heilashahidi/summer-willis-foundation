@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import QuickExit from '../components/QuickExit.astro';
 import { SEO } from 'astro-seo';
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 const {
   title = 'Summer Willis Foundation',
-  description = 'Building stronger communities through food support, housing assistance, and family services.',
+  description = 'Summer Willis Foundation empowers survivors of sexual violence through advocacy, community, and resources, helping survivors reclaim their stories and create lasting systemic change.',
   image = '/images/photos/summer1.jpg',
 } = Astro.props;
 
@@ -36,12 +37,14 @@ const jsonLd = {
     name: 'Summer Willis',
   },
   sameAs: [
-    'https://www.facebook.com/summerwillisfoundation',
+    'https://www.facebook.com/profile.php?id=100093688899030',
+    'https://www.linkedin.com/company/summer-willis-foundation/',
+    'https://www.instagram.com/summerwillisfoundation/',
   ],
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
-    url: `${siteUrl}/contact`,
+    url: `${siteUrl}/get-involved#contact`,
   },
 };
 ---
@@ -99,6 +102,7 @@ const jsonLd = {
     <Nav />
     <slot />
     <Footer />
+    <QuickExit />
     <givebutter-widget id="jwPoeL"></givebutter-widget>
   </body>
 </html>
@@ -125,6 +129,7 @@ const jsonLd = {
     --c-bg-yellow:    #fff7eb;
     --c-bg-pink:      #fef2f1;
     --c-bg-blue:      #eef5fc;
+    --c-text-secondary: #6b7280;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -220,6 +225,104 @@ const jsonLd = {
   }
 
   .btn-white:hover { background: #f9fafb; }
+
+  /* Page header — shared across all inner pages */
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
+
+  .header-sun {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 220px;
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* Section underline decoration */
+  .section-underline {
+    height: 28px;
+    width: auto;
+    display: block;
+    margin: 0.4rem 0 1.25rem;
+    opacity: 0.85;
+  }
+
+  /* 3-column responsive grid utility */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Shared form styles */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #111827;
+    background: white;
+    transition: border-color 0.15s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(0, 144, 157, 0.12);
+  }
+
+  /* Decorative corner icons — shared across pages */
+  .decor-icon {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .decor-sm  { width: 90px; }
+  .decor-tl  { top: 16px;    left: 16px;  }
+  .decor-tr  { top: 16px;    right: 16px; }
+  .decor-bl  { bottom: 16px; left: 16px;  }
+  .decor-br  { bottom: 16px; right: 16px; }
 
   /* Scroll reveal animations */
   @media (prefers-reduced-motion: no-preference) {

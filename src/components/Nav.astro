@@ -3,9 +3,21 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/campaigns', label: 'Campaigns' },
-  { href: '/resource-map', label: 'Resource Map' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
+  {
+    label: 'Resources',
+    children: [
+      { href: '/resource-map', label: 'Resource Map' },
+      { href: '/resource-guide', label: 'Resource Guide' },
+    ],
+  },
+  {
+    label: 'Media',
+    children: [
+      { href: '/blog', label: 'Blog' },
+      { href: '/press', label: 'Press & News' },
+      { href: '/events', label: 'Events' },
+    ],
+  },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -23,14 +35,34 @@ const currentPath = Astro.url.pathname;
 
     <ul class="nav-links" id="nav-links">
       {navLinks.map(link => (
-        <li>
-          <a
-            href={link.href}
-            class:list={['nav-link', { active: currentPath === link.href }]}
-          >
-            {link.label}
-          </a>
-        </li>
+        link.children ? (
+          <li class:list={['has-dropdown', { active: link.children.some(c => currentPath === c.href || currentPath.startsWith(c.href + '/')) }]}>
+            <button class="nav-link dropdown-toggle" aria-expanded="false">
+              {link.label} <span class="chevron">▾</span>
+            </button>
+            <ul class="dropdown">
+              {link.children.map(child => (
+                <li>
+                  <a
+                    href={child.href}
+                    class:list={['dropdown-link', { active: currentPath === child.href }]}
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li>
+            <a
+              href={link.href}
+              class:list={['nav-link', { active: currentPath === link.href }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        )
       ))}
       <li>
         <a href="/get-involved" class="nav-cta">Get Involved</a>
@@ -59,16 +91,40 @@ const currentPath = Astro.url.pathname;
     toggle.classList.contains('is-open') ? closeMenu() : openMenu();
   });
 
-  // Close when a nav link is clicked
-  links?.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeMenu);
+  // Dropdown toggle (click-based for both desktop and mobile)
+  document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const li = (btn as HTMLElement).closest('.has-dropdown');
+      const isOpen = li?.classList.contains('dropdown-open');
+      // Close all other dropdowns
+      document.querySelectorAll('.has-dropdown.dropdown-open').forEach(el => {
+        el.classList.remove('dropdown-open');
+        el.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        li?.classList.add('dropdown-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 
-  // Close when clicking outside
+  // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.has-dropdown')) {
+      document.querySelectorAll('.has-dropdown.dropdown-open').forEach(el => {
+        el.classList.remove('dropdown-open');
+        el.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+    }
     if (!toggle?.contains(e.target as Node) && !links?.contains(e.target as Node)) {
       closeMenu();
     }
+  });
+
+  // Close menu when a nav link is clicked
+  links?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMenu);
   });
 </script>
 
@@ -130,6 +186,75 @@ const currentPath = Astro.url.pathname;
     color: var(--c-primary);
   }
 
+  /* Dropdown trigger button */
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
+  .has-dropdown.active > .dropdown-toggle {
+    background: var(--c-bg-teal);
+    color: var(--c-primary);
+  }
+
+  .chevron {
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  .has-dropdown.dropdown-open .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown menu */
+  .has-dropdown {
+    position: relative;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    min-width: 160px;
+    z-index: 10;
+  }
+
+  .has-dropdown.dropdown-open .dropdown {
+    display: block;
+  }
+
+  .dropdown-link {
+    display: block;
+    padding: 0.5rem 0.85rem;
+    text-decoration: none;
+    color: #374151;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .dropdown-link:hover,
+  .dropdown-link.active {
+    background: var(--c-bg-teal);
+    color: var(--c-primary);
+  }
+
   .nav-cta {
     margin-left: 0.5rem;
     padding: 0.5rem 1.1rem;
@@ -175,8 +300,9 @@ const currentPath = Astro.url.pathname;
   .menu-toggle.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .menu-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  @media (max-width: 640px) {
+  @media (max-width: 843px) {
     .menu-toggle { display: flex; }
+    .nav-inner { padding: 0 1rem; }
 
     .nav-links {
       position: absolute;
@@ -189,7 +315,6 @@ const currentPath = Astro.url.pathname;
       border-bottom: 1px solid #e5e7eb;
       gap: 0.25rem;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      /* Slide animation */
       max-height: 0;
       overflow: hidden;
       opacity: 0;
@@ -197,13 +322,30 @@ const currentPath = Astro.url.pathname;
     }
 
     .nav-links.open {
-      max-height: 480px;
+      max-height: 560px;
       opacity: 1;
       padding: 1rem;
     }
 
     .nav-links li { width: 100%; }
-    .nav-link, .nav-cta { display: block; width: 100%; }
+    .nav-link, .nav-cta { display: block; width: 100%; min-height: 44px; line-height: 44px; padding-top: 0; padding-bottom: 0; }
     .nav-cta { margin-left: 0; margin-top: 0.5rem; text-align: center; }
+    .dropdown-toggle { min-height: 44px; }
+
+    /* Mobile dropdown — inline, no absolute positioning */
+    .has-dropdown { position: static; }
+
+    .dropdown-toggle { width: 100%; justify-content: space-between; text-align: left; }
+
+    .dropdown {
+      position: static;
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      padding: 0 0 0 1rem;
+      background: transparent;
+    }
+
+    .dropdown-link { font-size: 0.9rem; }
   }
 </style>

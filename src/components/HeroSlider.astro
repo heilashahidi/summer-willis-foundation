@@ -3,6 +3,7 @@ const slides = [
   { src: '/images/photos/image1.jpg', alt: 'Summer Willis Foundation community photo 1' },
   { src: '/images/photos/image2.jpg', alt: 'Summer Willis Foundation community photo 2' },
   { src: '/images/photos/image3.jpg', alt: 'Summer Willis Foundation community photo 3' },
+  { src: '/images/photos/summer3.jpg', alt: 'Summer Willis Foundation community photo 4' },
 ];
 ---
 
@@ -13,6 +14,14 @@ const slides = [
         <img src={slide.src} alt={slide.alt} />
       </div>
     ))}
+  </div>
+
+  <!-- Double wave transition -->
+  <div class="slider-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,6 C120,6 240,30 360,30 C480,30 600,6 720,6 C840,6 960,30 1080,30 C1200,30 1320,6 1440,6 L1440,30 L0,30 Z" fill="rgba(0,144,157,0.85)"/>
+      <path d="M0,30 C120,30 240,6 360,6 C480,6 600,30 720,30 C840,30 960,6 1080,6 C1200,6 1320,30 1440,30 L1440,30 L0,30 Z" fill="#006b7a"/>
+    </svg>
   </div>
 
   <!-- Arrows -->
@@ -32,7 +41,6 @@ const slides = [
 </div>
 
 <script>
-  const track = document.getElementById('slides-track')!;
   const slides = Array.from(document.querySelectorAll<HTMLElement>('.slide'));
   const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
   let current = 0;
@@ -77,11 +85,27 @@ const slides = [
     position: relative;
   }
 
+  .slider-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    line-height: 0;
+    pointer-events: none;
+  }
+
+  .slider-wave svg {
+    width: 100%;
+    height: 30px;
+    display: block;
+  }
+
   .slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 1.2s ease;
   }
 
   .slide.active {
@@ -94,6 +118,36 @@ const slides = [
     object-fit: cover;
     object-position: center;
     display: block;
+    animation: kenburns-a 12s ease-in-out infinite alternate;
+  }
+
+  .slide:nth-child(1) img { object-position: center bottom; }
+  .slide:nth-child(2) img { animation-name: kenburns-b; }
+  .slide:nth-child(3) img { animation-name: kenburns-c; }
+  .slide:nth-child(4) img { animation-name: kenburns-d; object-position: center bottom; }
+
+  @keyframes kenburns-a {
+    0%   { transform: scale(1.05) translate(0, 0); }
+    100% { transform: scale(1.12) translate(-1.5%, 1%); }
+  }
+
+  @keyframes kenburns-b {
+    0%   { transform: scale(1.12) translate(1%, 0); }
+    100% { transform: scale(1.05) translate(-1%, 1%); }
+  }
+
+  @keyframes kenburns-c {
+    0%   { transform: scale(1.05) translate(1%, 0.5%); }
+    100% { transform: scale(1.12) translate(0, -1%); }
+  }
+
+  @keyframes kenburns-d {
+    0%   { transform: scale(1.12) translate(-1%, -0.5%); }
+    100% { transform: scale(1.05) translate(1%, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide img { animation: none; }
   }
 
   /* Arrows */
@@ -126,7 +180,7 @@ const slides = [
   /* Dots */
   .dots {
     position: absolute;
-    bottom: 1.25rem;
+    bottom: 6rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -149,8 +203,17 @@ const slides = [
     background: white;
   }
 
+  @media (max-width: 1024px) {
+    .slider { height: 540px; }
+  }
+
   @media (max-width: 768px) {
     .slider { height: 460px; }
     .arrow { width: 38px; height: 38px; font-size: 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .slider { height: min(380px, 60vh); }
+    .arrow { width: 34px; height: 34px; font-size: 1.25rem; }
   }
 </style>

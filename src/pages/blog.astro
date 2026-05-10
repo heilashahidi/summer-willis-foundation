@@ -1,12 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
 
 const posts = [
   {
     date: 'March 1, 2026',
     category: 'Survivor Resources',
     title: 'What to Do After Sexual Assault: A Step-by-Step Guide for Survivors',
-    excerpt: 'If you or someone you know has experienced sexual assault, knowing your options can feel overwhelming. This guide walks through your first steps — at your own pace, on your own terms.',
+    excerpt: 'If you or someone you know has experienced sexual assault, knowing your options can feel overwhelming. This guide walks through your first steps, at your own pace, on your own terms.',
     emoji: '💜',
     categoryColor: 'var(--c-primary)',
     href: '/blog/what-to-do-after-sexual-assault',
@@ -24,8 +25,8 @@ const posts = [
     date: 'February 1, 2026',
     category: 'Legal Resources',
     title: 'Understanding Your Legal Rights as a Sexual Violence Survivor',
-    excerpt: 'Navigating the legal system after sexual violence can feel overwhelming. Here\'s a plain-language breakdown of your rights — from Title IX to protective orders to civil suits.',
-    emoji: '⚖️',
+    excerpt: 'Navigating the legal system after sexual violence can feel overwhelming. Here\'s a plain-language breakdown of your rights, from Title IX to protective orders to civil suits.',
+    emoji: '/images/icons/scale.png',
     categoryColor: 'var(--c-primary-dark)',
     href: '/blog/legal-rights-sexual-violence-survivors',
   },
@@ -41,21 +42,19 @@ const posts = [
 ];
 ---
 
-<Layout title="Blog & News" description="News, stories, and updates from Summer Willis Foundation.">
+<Layout title="Blog" description="Articles, survivor stories, and advocacy insights from the Summer Willis Foundation: empowering survivors and educating communities about sexual violence.">
 
-  <section class="page-header">
-    <div class="container">
-      <h1>Blog & News</h1>
-      <p>Stories of impact, program updates, and community news.</p>
-    </div>
-  </section>
+  <PageHeader
+    title="Blog"
+    subtitle="Stories of impact, program updates, and community news."
+  />
 
   <section class="section">
     <div class="container">
 
       <!-- Featured post -->
       <div class="featured-post">
-        <div class="featured-emoji">{posts[0].emoji}</div>
+        <div class="featured-emoji">{posts[0].emoji.startsWith('/') ? <img src={posts[0].emoji} alt="" class="post-emoji-img" /> : posts[0].emoji}</div>
         <div class="featured-content">
           <div class="post-meta">
             <span class="category" style={`background: ${posts[0].categoryColor};`}>{posts[0].category}</span>
@@ -69,10 +68,10 @@ const posts = [
 
       <!-- Post grid -->
       <h3 class="grid-heading">More Stories</h3>
-      <div class="posts-grid">
+      <div class="posts-grid grid-3">
         {posts.slice(1).map(post => (
           <article class="post-card">
-            <div class="post-emoji">{post.emoji}</div>
+            <div class="post-emoji">{post.emoji.startsWith('/') ? <img src={post.emoji} alt="" class="post-emoji-img" /> : post.emoji}</div>
             <div class="post-meta">
               <span class="category" style={`background: ${post.categoryColor};`}>{post.category}</span>
               <span class="date">{post.date}</span>
@@ -106,21 +105,6 @@ const posts = [
 </Layout>
 
 <style>
-  .page-header {
-    background: linear-gradient(135deg, var(--c-primary-dark), var(--c-primary));
-    color: white;
-    padding: 4rem 0;
-    text-align: center;
-  }
-
-  .page-header h1 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    margin: 0 0 0.75rem;
-  }
-
-  .page-header p { font-size: 1.1rem; opacity: 0.9; margin: 0; }
-
   .featured-post {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -134,6 +118,7 @@ const posts = [
   }
 
   .featured-emoji { font-size: 4rem; }
+  .post-emoji-img { width: 4rem; height: 4rem; object-fit: contain; display: block; }
 
   .featured-content h2 {
     font-size: 1.4rem;
@@ -162,7 +147,7 @@ const posts = [
     border-radius: 20px;
   }
 
-  .date { font-size: 0.85rem; color: #6b7280; }
+  .date { font-size: 0.85rem; color: var(--c-text-secondary); }
 
   .grid-heading {
     font-size: 1.2rem;
@@ -172,8 +157,6 @@ const posts = [
   }
 
   .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
@@ -198,7 +181,7 @@ const posts = [
 
   .post-card p {
     font-size: 0.9rem;
-    color: #6b7280;
+    color: var(--c-text-secondary);
     line-height: 1.6;
     margin: 0 0 1rem;
   }
@@ -209,16 +192,6 @@ const posts = [
     font-size: 0.875rem;
     font-weight: 600;
   }
-
-  .decor-icon {
-    position: absolute;
-    width: 160px;
-    height: auto;
-    opacity: 0.18;
-    pointer-events: none;
-  }
-  .decor-bl { bottom: 16px; left: 16px; }
-  .decor-tr { top: 16px; right: 16px; }
 
   /* Newsletter */
   .newsletter-section {

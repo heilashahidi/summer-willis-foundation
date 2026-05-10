@@ -1,0 +1,118 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  buttonText: string;
+  buttonHref: string;
+  theme?: 'yellow' | 'pink' | 'teal';
+  layout?: 'row' | 'center';
+  showSun?: boolean;
+}
+
+const {
+  heading,
+  body,
+  buttonText,
+  buttonHref,
+  theme = 'yellow',
+  layout = 'row',
+  showSun = false,
+} = Astro.props;
+
+const btnClass = (theme === 'pink') ? 'btn btn-white' : 'btn btn-primary';
+---
+
+<section class={`cta-banner cta-banner--${theme} section`}>
+  {showSun && <img src="/images/icons/SWF - Sun.png" alt="" class="cta-sun" aria-hidden="true" />}
+  <div class={`container cta-inner${layout === 'center' ? ' cta-inner--center' : ''}`}>
+    <div class="cta-text">
+      <h2>{heading}</h2>
+      <p>{body}</p>
+    </div>
+    <a href={buttonHref} class={btnClass}>{buttonText}</a>
+  </div>
+</section>
+
+<style>
+  .cta-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner--yellow {
+    background: var(--c-bg-yellow);
+    border-top: 2px solid var(--c-yellow);
+  }
+
+  .cta-banner--pink {
+    background: var(--c-pink-dark);
+    color: white;
+    padding: 4rem 0;
+  }
+
+  .cta-banner--teal {
+    background: var(--c-primary-dark);
+    color: white;
+  }
+
+  .cta-sun {
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 240px;
+    height: auto;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-inner--center {
+    flex-direction: column;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .cta-banner h2 {
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+
+  .cta-banner--yellow h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .cta-banner--pink h2,
+  .cta-banner--teal h2 {
+    font-size: 1.75rem;
+  }
+
+  .cta-banner p {
+    margin: 0;
+  }
+
+  .cta-banner--yellow p {
+    color: var(--c-text-secondary);
+  }
+
+  .cta-banner--pink p,
+  .cta-banner--teal p {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .cta-inner--center p {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .cta-inner { flex-direction: column; text-align: center; }
+  }
+</style>

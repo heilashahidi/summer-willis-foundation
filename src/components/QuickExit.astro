@@ -1,0 +1,76 @@
+---
+interface Props {
+  position?: 'bottom-left' | 'top-right' | 'inline';
+}
+const { position = 'bottom-left' } = Astro.props;
+---
+
+<button id="quick-exit" data-position={position} aria-label="Quick exit, leave this site immediately" title="Click to leave this site immediately">
+  ✕ Quick Exit
+</button>
+
+<script>
+  function quickExit() {
+    // Immediately blank the page for instant visual safety
+    document.body.innerHTML = '';
+    document.body.style.background = 'white';
+    // Open Google in the same tab, replacing the current history entry
+    // so pressing back skips this page entirely
+    window.location.replace('https://www.google.com');
+  }
+
+  document.getElementById('quick-exit')?.addEventListener('click', quickExit);
+
+  // Also trigger on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') quickExit();
+  });
+</script>
+
+<style>
+  #quick-exit {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1rem;
+    top: auto;
+    right: auto;
+    z-index: 9999;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(220, 38, 38, 0.35);
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+
+  #quick-exit:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+  }
+
+  #quick-exit:active {
+    transform: scale(0.97);
+  }
+
+  #quick-exit[data-position="top-right"] {
+    bottom: auto;
+    left: auto;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  #quick-exit[data-position="inline"] {
+    position: static;
+    bottom: auto;
+    left: auto;
+    top: auto;
+    right: auto;
+    box-shadow: 0 2px 12px rgba(220, 38, 38, 0.35);
+  }
+</style>
