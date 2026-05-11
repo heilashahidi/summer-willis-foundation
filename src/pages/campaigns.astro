@@ -18,7 +18,7 @@ const campaigns = [
     ],
     stats: [
       { value: '29', label: 'Marathons by our founder' },
-      { value: '12+', label: 'Community run events held' },
+      { value: '3+', label: 'Community run events held' },
       { value: '3,000+', label: 'Participants across events' },
     ],
     bg: 'var(--c-bg-teal)',
@@ -75,9 +75,8 @@ const campaigns = [
       'Available in multiple languages',
     ],
     stats: [
-      { value: '60+', label: 'Partner organizations listed' },
-      { value: '1,400+', label: 'Survivor referrals made' },
       { value: '24/7', label: 'Crisis resources available' },
+      { value: 'EN / ES', label: 'Currently available in English and Spanish' },
     ],
     bg: 'var(--c-bg-yellow)',
     accent: 'var(--c-yellow)',
@@ -97,11 +96,7 @@ const campaigns = [
       'Screenings paired with community conversations',
       'Educational curriculum available for schools and organizations',
     ],
-    stats: [
-      { value: '30+', label: 'Survivor stories captured' },
-      { value: '15+', label: 'Screening events held' },
-      { value: '5K+', label: 'Viewers reached' },
-    ],
+    stats: [],
     bg: 'var(--c-bg-pink)',
     accent: 'var(--c-pink-dark)',
     cta: 'Watch & Learn',
@@ -137,14 +132,16 @@ const campaigns = [
             <a href={campaign.ctaHref} class="btn btn-primary" style={`margin-top: 1.5rem; background: ${campaign.accent}; border-color: ${campaign.accent};`}>{campaign.cta}</a>
           )}
         </div>
-        <div class="campaign-stats">
-          {campaign.stats.map(stat => (
-            <div class="stat-card">
-              <div class="stat-value" style={`color: ${campaign.accent};`}>{stat.value}</div>
-              <div class="stat-label">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+        {campaign.stats.length > 0 && (
+          <div class="campaign-stats">
+            {campaign.stats.map(stat => (
+              <div class="stat-card">
+                <div class="stat-value" style={`color: ${campaign.accent};`}>{stat.value}</div>
+                <div class="stat-label">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {campaign.highlight && (
         <div class="container">
