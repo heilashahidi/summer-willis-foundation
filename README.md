@@ -87,6 +87,18 @@ Components live in `src/components/ResourceMap.tsx`, `ResourceCard.tsx`, and `Fi
 | `npm run build`   | Build production site to `./dist/`           |
 | `npm run preview` | Preview the production build locally         |
 
+## Deployment
+
+The site is deployed on **Vercel** and served at https://www.summerwillisfoundation.org.
+
+- **Source.** The `main` branch of `github.com/heilashahidi/summer-willis-foundation` is connected to the Vercel project (`summer-willis-foundation`). Pushes to `main` trigger a production deploy; pushes to other branches and pull requests get preview deployments.
+- **Build.** Vercel detects Astro automatically and runs `npm install` followed by `npm run build`, publishing the static output from `./dist/`. No serverless functions are used; the site is fully static.
+- **Environment variables.** Set the `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, and `PUBLIC_GOOGLE_MAPS_API_KEY` env vars in the Vercel project settings for Production, Preview, and Development environments. Because they are prefixed with `PUBLIC_`, Astro inlines them into the client bundle at build time, so a redeploy is required whenever they change.
+- **Domain.** The production domain `www.summerwillisfoundation.org` is configured in Vercel. `astro.config.mjs` mirrors this value via `site:`, which is used to generate absolute URLs for the sitemap and canonical tags.
+- **Local Vercel CLI.** The repo contains a `.vercel/` directory linking the local checkout to the hosted project, so `vercel`, `vercel pull`, and `vercel deploy` work out of the box for anyone with access.
+- **Cache and assets.** Vercel serves `./dist/` behind its CDN with immutable cache headers on hashed assets. Files in `public/` (fonts, images, favicons, `robots.txt`) are served verbatim from the site root.
+- **Post-deploy checks.** After a production deploy, verify the resource map loads (Supabase + Google Maps env vars wired up), the GiveButter donate widget mounts, and `sitemap-index.xml` resolves at the site root.
+
 ## Summary of updates
 
 ### Pages and content
