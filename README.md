@@ -1,6 +1,6 @@
 # Summer Willis Foundation
 
-Website for the Summer Willis Foundation, built with Astro, React, Tailwind CSS, and Supabase.
+The Summer Willis Foundation website is a static Astro 5 site (with React islands for interactive bits) built for a nonprofit that supports survivors of sexual violence. Its centerpiece is a bilingual, Supabase-backed resource map that lets users drill from a national US view into state-level survivor support services (legal, medical, shelter, counseling, crisis hotlines), filter by service type, save favorites, and find the nearest options by geolocation. Alongside the map, the site hosts pages for campaigns, events, press, videos, a SEO-optimized blog, and GiveButter-powered donations. It's styled with Tailwind v4 and deployed on Vercel at [summerwillisfoundation.org](https://www.summerwillisfoundation.org).
 
 ## Tech stack
 
