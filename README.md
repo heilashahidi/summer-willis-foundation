@@ -15,6 +15,23 @@ Website for the Summer Willis Foundation, built with Astro, React, Tailwind CSS,
 
 `/` home, `/about`, `/campaigns`, `/get-involved`, `/resource-guide`, `/resource-map`, `/map`, `/events`, `/press`, `/videos`, `/blog` (with dynamic `BlogPost` layout), `/contact`.
 
+## Resource map
+
+A core feature of the site: a searchable, vetted directory of survivor support services backed by Supabase and rendered with Google Maps.
+
+- **Two routes.** `/resource-map` embeds the map inline with a "Understanding the Services" explainer and CTA banner. `/map` is the full-screen view, linked from the embedded page's "Open Full Map" button.
+- **Two views.** The map opens at a national level with a US GeoJSON overlay; states that have resources are highlighted in teal, others are muted. Clicking a highlighted state fits bounds to it and drills into a state view that shows individual resource markers. A back action returns to the national view.
+- **Welcome overlay.** First-time visitors see a centered overlay asking for a city, state, or zip code, with a "Use My Location" fallback (browser geolocation). The overlay also offers a Spanish toggle.
+- **Bilingual.** All map UI (welcome overlay, filter bar, resource card copy) supports English and Spanish via a `lang` toggle.
+- **Service categories.** Pro Bono Legal, SANE Program, Sexual Violence Services, Shelter / Safe House, Counseling & Therapy, and Crisis Hotlines. Each has its own marker color, icon, and theme (driven by `MARKER_COLOR_BY_SLUG` in `src/lib/constants.ts`).
+- **Filtering.** Users can filter visible markers by service type and toggle a "saved only" view. Saved resources are persisted to `localStorage` under the `swf-saved-resources` key.
+- **Search and geolocation.** Inside a state, users can geocode a city or zip (Google Geocoding API) or trigger browser geolocation; both update the map center, zoom, and the user's location reference point.
+- **Nearest list.** When a user location is known, the filter bar surfaces the 10 nearest resources sorted by haversine distance. On mobile, the same list renders as a horizontally scrollable strip docked to the bottom of the map.
+- **Resource detail.** Selecting a marker opens a `ResourceCard` panel with full details from Supabase. The card renders regardless of whether `place_id` is set.
+- **Data shape.** Resources are loaded from the `resources` table (filtered to `is_active = true` and rows with lat/lng) joined to `resource_types`. Both tables are queried at mount via `@supabase/supabase-js`.
+
+Components live in `src/components/ResourceMap.tsx`, `ResourceCard.tsx`, and `FilterBar.tsx`. Required env vars: `PUBLIC_GOOGLE_MAPS_API_KEY`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`.
+
 ## Commands
 
 | Command           | Action                                       |
