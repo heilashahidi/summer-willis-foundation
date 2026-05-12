@@ -1,46 +1,51 @@
-# Astro Starter Kit: Basics
+# Summer Willis Foundation
 
-```sh
-npm create astro@latest -- --template basics
-```
+Website for the Summer Willis Foundation, built with Astro, React, Tailwind CSS, and Supabase.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech stack
 
-## 🚀 Project Structure
+- **Astro 5** with React islands for interactive components
+- **Tailwind CSS v4** for styling
+- **Supabase** for the resource directory data
+- **Google Maps** (`@vis.gl/react-google-maps` + marker clusterer) for the resource map
+- **GiveButter** widgets for donations
+- **astro-seo** + `@astrojs/sitemap` for SEO
 
-Inside of your Astro project, you'll see the following folders and files:
+## Pages
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+`/` home, `/about`, `/campaigns`, `/get-involved`, `/resource-guide`, `/resource-map`, `/map`, `/events`, `/press`, `/videos`, `/blog` (with dynamic `BlogPost` layout), `/contact`.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Start local dev server at `localhost:4321`   |
+| `npm run build`   | Build production site to `./dist/`           |
+| `npm run preview` | Preview the production build locally         |
 
-All commands are run from the root of the project, from a terminal:
+## Summary of updates
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Pages and content
+- Added Events, Press, and Videos pages plus a Pillars section on the home page.
+- Built the Resource Map page with Supabase-backed data, service explanations, and consistent theme colors.
+- Added SEO blog articles and a reusable `BlogPost` layout.
+- Updated the campaign stat cards: trimmed the resource map card, removed film stats, adjusted denim runs, and reformatted the legislation card to "Texas & growing / States with active advocacy."
+- Added Gabriella Taylor's advisory and voice cards; tuned her voice card color.
+- Removed TX House Democratic Caucus and Santa Monica City Council from sponsors.
 
-## 👀 Want to learn more?
+### Donations
+- Integrated GiveButter donation widgets across the site.
+- Reordered the Get Involved page and fixed scroll jumps when widgets mount.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### SEO
+- Added sitemap, `robots.txt`, canonical URLs, and JSON-LD schema.
+
+### UI and polish
+- Reworked navigation, hero sun positioning, and assorted UI details.
+- Card stack animation, video embeds, and font fixes.
+- Carousel improvements and decorative icon polish; prevented icons from overlapping content on resize.
+- Fixed `ResourceCard` to render Supabase data regardless of `place_id`.
+- Fixed JS-toggled active class scoping so it works in Astro production builds.
+- Viewport meta tag now includes `initial-scale=1`; base font size set to 16px.
+- Copy passes: removed em dashes from voice card quotes and other site copy.
