@@ -4,12 +4,58 @@ Website for the Summer Willis Foundation, built with Astro, React, Tailwind CSS,
 
 ## Tech stack
 
-- **Astro 5** with React islands for interactive components
-- **Tailwind CSS v4** for styling
-- **Supabase** for the resource directory data
-- **Google Maps** (`@vis.gl/react-google-maps` + marker clusterer) for the resource map
-- **GiveButter** widgets for donations
-- **astro-seo** + `@astrojs/sitemap` for SEO
+### Framework and rendering
+- **Astro 5** (`astro ^5.17.1`) drives the site. Most pages are static `.astro` templates rendered at build time. Interactive UI (the resource map, filter bar, resource card) is shipped as React islands via `@astrojs/react` and hydrated client-side (most use `client:visible`).
+- **React 19** (`react`, `react-dom` ^19.2.4) for those islands. `@types/react` and `@types/react-dom` are wired in for type safety.
+- **TypeScript** is enabled for all `.ts` / `.tsx` files; Astro's default `tsconfig.json` extends `astro/tsconfigs/strict`.
+
+### Styling
+- **Tailwind CSS v4** (`tailwindcss ^4.2.1`) integrated through the official Vite plugin (`@tailwindcss/vite`). Styles are imported from `src/styles/tailwind.css`.
+- Page-scoped CSS lives in `<style>` blocks inside each `.astro` file; theme tokens are defined as CSS custom properties (`--c-primary`, `--c-bg-teal`, etc.) and referenced from both Tailwind utilities and component styles.
+
+### Data layer
+- **Supabase** (`@supabase/supabase-js ^2.98.0`) is the source of truth for the resource directory. The browser client is created in `ResourceMap.tsx` using `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`. Tables used: `resources` (joined to `resource_types`).
+- A one-off Node script at `scripts/backfill-states.mjs` reverse-geocodes resource lat/lng to a US state abbreviation and writes it back to Supabase. Run with `node scripts/backfill-states.mjs`.
+
+### Maps and geocoding
+- **Google Maps** rendered through `@vis.gl/react-google-maps ^1.7.1` (`APIProvider`, `Map`, `AdvancedMarker`, `Pin`, `useMap`).
+- **Marker clustering** is provided by `@googlemaps/markerclusterer ^2.6.2` for dense state-level views.
+- **Geocoding** uses the Google Geocoding REST API directly (called from `ResourceMap.tsx`) to translate user-entered city / state / zip into lat/lng and zoom level.
+- A static GeoJSON of US states is loaded from `PublicaMundi/MappingAPI` on GitHub to draw the national overlay.
+
+### Donations
+- **GiveButter** widgets are embedded via their hosted script. Mount points include a donation form on Get Involved and supporting CTAs across the site.
+
+### SEO
+- **`astro-seo ^1.1.0`** powers `<head>` metadata, OpenGraph, Twitter cards, and JSON-LD schema blocks.
+- **`@astrojs/sitemap ^3.7.0`** generates `sitemap-index.xml` at build time. A hand-written `public/robots.txt` references it.
+- Canonical URLs are emitted from the shared `src/layouts/Layout.astro`.
+
+### Build and tooling
+- **Vite** (bundled with Astro) handles module resolution and dev server.
+- **No test framework** is currently configured.
+- Path alias `@/*` resolves to `src/*` (set up in `tsconfig.json`).
+
+### Hosting and environment
+- `astro.config.mjs` sets `site: 'https://www.summerwillisfoundation.org'`. Production builds output static assets to `./dist/`.
+- Required env vars (`.env` at project root, prefixed with `PUBLIC_` so Astro exposes them to the client):
+  - `PUBLIC_SUPABASE_URL`
+  - `PUBLIC_SUPABASE_ANON_KEY`
+  - `PUBLIC_GOOGLE_MAPS_API_KEY`
+
+### Project structure
+```
+src/
+  assets/         static imports (images, etc.)
+  components/     Astro components + React islands (ResourceMap, FilterBar, ResourceCard, Nav, Footer, etc.)
+  layouts/        Layout.astro (default), BlogPost.astro (blog posts)
+  lib/            constants.ts (marker colors, theme tokens)
+  pages/          route files; blog/ and events/ hold dynamic + index routes
+  styles/         tailwind.css entrypoint
+  types/          shared TypeScript types (Resource, ResourceType, etc.)
+public/           static files served at root (favicon, robots.txt, images)
+scripts/          one-off Node scripts (backfill-states.mjs)
+```
 
 ## Pages
 
